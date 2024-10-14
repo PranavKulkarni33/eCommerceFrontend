@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="verification-form-wrapper">
+        <div class="verification-card">
+            <div class="verification-card-body">
+                <form style="display: flex;">
+                    
+                    <div class="form-group text-center">
+                        <h4 class="form-title"><strong>Verify Your Account</strong></h4>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" class="form-input" name="email" [(ngModel)]="user.email" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="code" class="form-label">Confirmation Code</label>
+                        <input type="text" id="code" class="form-input" name="code" [(ngModel)]="user.code" placeholder="Enter the confirmation code">
+                    </div>
+                    <button type="button" class="button-primary" (click)="confirmSignup()">Verify</button>
+                    
+                    <div class="row">
+                        <div class="link-wrapper">
+                            <button type="button" class="button-secondary" (click)="resendCode()">Resend Code</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
