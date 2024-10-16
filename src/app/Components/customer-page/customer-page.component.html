@@ -1,1 +1,83 @@
-<p>customer-page works!</p>
+<div class="container-fluid">
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Pebble Studios</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown" *ngIf="isLoggedIn; else loginSignup">
+          <!-- Dropdown menu for logged-in users -->
+          <button class="nav-link dropdown-toggle" id="userDropdown" role="button" (click)="toggleDropdown()">
+            {{ user.name }}
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" [class.show]="dropdownOpen">
+            <li><a class="dropdown-item" href="#" (click)="openEditProfileModal($event)">Edit Profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" (click)="signOut($event)">Sign Out</a></li>
+          </ul>
+        </li>
+
+        <!-- Login and Sign Up buttons for users who are not logged in -->
+        <ng-template #loginSignup>
+          <li class="nav-item">
+            <button class="btn btn-outline-light me-2" (click)="login()">Log In</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-light me-2" (click)="signUp()">Sign Up</button>
+          </li>
+        </ng-template>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content (same for logged-in and not logged-in users) -->
+  <div class="row justify-content-center my-5">
+    <div class="col-4">
+      <h3>Welcome to Pebble Studios</h3>
+      <p>Browse our collection of handmade arts and crafts. You can edit your profile or sign out from the dropdown menu (if logged in).</p>
+    </div>
+  </div>
+
+  <!-- Edit Profile Modal (only visible for logged-in users) -->
+  <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Edit Name -->
+          <div class="mb-3">
+            <label for="editName" class="form-label">Name:</label>
+            <input type="text" id="editName" [(ngModel)]="user.name" class="form-control">
+          </div>
+          <!-- Change Password Section -->
+          <h6>Change Password</h6>
+          <div class="mb-3">
+            <label for="currentPassword" class="form-label">Current Password:</label>
+            <input [type]="showOldPassword ? 'text' : 'password'" id="currentPassword" class="form-control" [(ngModel)]="oldPassword" placeholder="Enter current password">
+            <input type="checkbox" (click)="toggleOldPassword()"> Show Password
+          </div>
+          <div class="mb-3">
+            <label for="newPassword" class="form-label">New Password:</label>
+            <input [type]="showNewPassword ? 'text' : 'password'" id="newPassword" class="form-control" [(ngModel)]="newPassword" placeholder="Enter new password">
+            <input type="checkbox" (click)="toggleNewPassword()"> Show Password
+          </div>
+          <div class="mb-3">
+            <label for="confirmNewPassword" class="form-label">Confirm New Password:</label>
+            <input [type]="showNewPassword ? 'text' : 'password'" id="confirmNewPassword" class="form-control" [(ngModel)]="confirmNewPassword" placeholder="Re-enter new password">
+          </div>
+          <!-- Error Message -->
+          <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="update()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
