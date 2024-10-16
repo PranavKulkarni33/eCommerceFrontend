@@ -1,1 +1,83 @@
-<p>admin-page works!</p>
+<div class="container">
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Administrative Component</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <button class="btn btn-outline-light me-2" (click)="getUsers()">Get all users accounts</button>
+            </li>
+            <li class="nav-item">
+              <button class="btn btn-outline-light me-2" (click)="getSalesHistory()">Get sales history</button>
+            </li>
+            <li class="nav-item">
+              <button class="btn btn-outline-light me-2" (click)="getInventoryHistory()">Get inventory history</button>
+            </li>
+            <li class="nav-item">
+                <button class="btn btn-outline-light me-2" (click)="openCustomerPage()">Customer Page</button>
+              </li>
+            <li class="nav-item">
+                <button class="btn btn-outline-light" (click)="signOut()">Sign Out</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  
+    <!-- User Accounts Table -->
+<div *ngIf="users.length > 0" class="mt-4">
+    <h3>User Accounts</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.email }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <button class="btn btn-sm btn-primary" (click)="editUser(user)">Edit</button>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-danger" (click)="deleteUser(user)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  
+    <!-- Edit User Form -->
+
+<div *ngIf="selectedUser" class="mt-4">
+    <h3>Edit User</h3>
+    <form>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email:</label>
+        <input type="email" id="email" name="email" class="form-control" [(ngModel)]="selectedUser.email" disabled />
+      </div>
+      <div class="mb-3">
+        <label for="name" class="form-label">Name:</label>
+        <input type="text" id="name" name="name" class="form-control" [(ngModel)]="selectedUser.name" />
+      </div>
+      <div class="mb-3">
+        <label for="role" class="form-label">Role:</label>
+        <select id="role" name="role" class="form-select" [(ngModel)]="selectedUser.role">
+          <option value="Customer">Customer</option>
+          <option value="Admin">Admin</option>
+        </select>
+      </div>
+      <button type="button" class="btn btn-success" (click)="updateUser()">Update</button>
+      <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+    </form>
+  </div>
+  
+  

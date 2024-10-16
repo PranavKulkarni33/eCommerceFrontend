@@ -4,4 +4,5 @@ export interface User {
     showPassword: boolean;
     code: string;
     name: string;
+    role: string;
 }
