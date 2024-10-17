@@ -1,33 +1,46 @@
-<div class="container">
-  <div class="login-form-wrapper">
-    <div class="login-card">
-      <div class="login-card-body">
-        <!-- Login Form -->
-        <form (keydown.enter)="login()" style="display: flex;">
-          <div class="form-group text-center">
-            <h3 class="form-title"><strong>Login</strong></h3>
-          </div>
-          <div class="form-group">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" id="email" class="form-input" name="email" [(ngModel)]="user.email" placeholder="Enter your email">
-          </div>
-          <div class="form-group">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" id="password" class="form-input" name="password" [(ngModel)]="user.password" placeholder="Enter your password">
-          </div>
-          <button type="button" class="button-primary" (click)="login()">Login</button>
-          <div class="link-wrapper">
-            <a href="/signUp" class="link">Don't have an account? <br /> <span class="link-highlight">Sign Up</span></a>
-          </div>
+<div class="d-lg-flex half">
+  <div class="bg order-1 order-md-2 bg-image" ></div>
+  <div class="contents order-2 order-md-1">
 
-          <!-- Forgot Password Section -->
-          <div class="link-wrapper">
-            <a href="#" (click)="openForgotPasswordModal($event)" class="link">Forgot Password?</a>
-          </div>
-        </form>
+    <div class="container" (keydown.enter)="login()">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-md-7">
+          <h3>Login to Pebble Studio</h3>
+          <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
+          <form action="#" method="post">
+            <div class="form-group first">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" id="email" class="form-control" name="email" [(ngModel)]="user.email" placeholder="Enter your email">
+              <!-- <input type="text" class="form-control" placeholder="your-email@gmail.com" id="username"> -->
+            </div>
+            <div class="form-group last mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" id="password" class="form-control" name="password" [(ngModel)]="user.password" placeholder="Enter your password">
+            </div>
+            
+            <!-- <div class="d-flex mb-5 align-items-center">
+              
+              <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span> 
+            </div> -->
+            <div class="d-flex mb-5 align-items-center">
+              <a href="#" (click)="openForgotPasswordModal($event)" class="link ml-auto">Forgot Password?</a>
+            </div>
+
+            <!-- <input type="submit" value="Log In" class="btn btn-block btn-primary"> -->
+            <button type="button" class="btn btn-block btn-primary" (click)="login()">Login</button>
+
+            <div class="link-wrapper">
+              <a href="/signUp" class="link">Don't have an account? <br /> <span class="link-highlight">Sign Up</span></a>
+            </div>
+
+
+          </form>
+        </div>
       </div>
     </div>
   </div>
+
+  
 </div>
 
 <!-- Forgot Password Modal -->
