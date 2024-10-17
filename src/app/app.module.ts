@@ -9,6 +9,7 @@ import { CustomerPageComponent } from './Components/customer-page/customer-page.
 import { AdminPageComponent } from './Components/admin-page/admin-page.component';
 import { FormsModule } from '@angular/forms';
 import { ConfirmSignUpComponent } from './Components/confirm-sign-up/confirm-sign-up.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ConfirmSignUpComponent } from './Components/confirm-sign-up/confirm-sig
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/Interfaces/user';
 import { AuthService } from 'src/app/Services/auth.service';
 import * as bootstrap from 'bootstrap';
+import { CustomerService } from 'src/app/Services/customer.service';
 
 @Component({
   selector: 'app-customer-page',
@@ -19,8 +20,9 @@ export class CustomerPageComponent implements OnInit {
   showOldPassword = false;
   showNewPassword = false;
   errorMessage = '';
+  products: any[] = [];
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private customerService: CustomerService) {}
 
   ngOnInit() {
     // Check if the user is authenticated
@@ -34,6 +36,7 @@ export class CustomerPageComponent implements OnInit {
     }).catch(() => {
       this.isLoggedIn = false;  // Handle cases where user isn't logged in
     });
+    this.loadProducts();
   }
 
   toggleDropdown() {
@@ -103,5 +106,17 @@ export class CustomerPageComponent implements OnInit {
 
   login() {
     this.router.navigate(['/login']);
+  }
+
+  loadProducts() {
+    this.customerService.getProducts().subscribe(
+      (data) => {
+        this.products = data.Items; // Assuming the response contains an 'Items' array
+        console.log('Products loaded successfully', this.products);
+      },
+      (err) => {
+        console.error('Error fetching products', err);
+      }
+    );
   }
 }

@@ -3,6 +3,8 @@ import { Amplify, Auth } from 'aws-amplify';
 import { environment } from 'src/environments/environment';
 import * as AWS from 'aws-sdk';
 import { User } from '../Interfaces/user';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +12,9 @@ import { User } from '../Interfaces/user';
 export class AdminService {
 
   cognitoIdentityServiceProvider!: AWS.CognitoIdentityServiceProvider;
+  private apiUrl = 'http://localhost:3000';
 
-  constructor() {
+  constructor(private http: HttpClient) {
     Amplify.configure({
       Auth: {
         identityPoolId: environment.cognito.identityPoolId,
@@ -121,5 +124,25 @@ export class AdminService {
         }
       });
     });
+  }
+
+  // Fetch all products
+  getAllProducts(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/products`);
+  }
+
+  // Add a new product
+  addProduct(product: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/products`, product);
+  }
+
+  // Update an existing product
+  updateProduct(productId: string, product: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/products/${productId}`, product);
+  }
+
+  // Delete a product
+  deleteProduct(productId: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/products/${productId}`);
   }
 }
