@@ -15,10 +15,10 @@
               <button class="btn btn-outline-light me-2" (click)="getInventoryHistory()">Get inventory history</button>
             </li>
             <li class="nav-item">
-                <button class="btn btn-outline-light me-2" (click)="openCustomerPage()">Customer Page</button>
-              </li>
+              <button class="btn btn-outline-light me-2" (click)="openCustomerPage()">Customer Page</button>
+            </li>
             <li class="nav-item">
-                <button class="btn btn-outline-light" (click)="signOut()">Sign Out</button>
+              <button class="btn btn-outline-light" (click)="signOut()">Sign Out</button>
             </li>
           </ul>
         </div>
@@ -80,4 +80,234 @@
     </form>
   </div>
   
-  
+
+
+<!-- Product List -->
+<div *ngIf="products.length > 0" class="mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Product Inventory</h3>
+    <button class="btn btn-success" (click)="openAddProductModal()">Add New Product</button>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Dimensions</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products" (click)="openProductDetailsModal(product)">
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.stock }}</td>
+        <td>{{ product.dimensions }}</td>
+        <td><button class="btn btn-sm btn-primary" (click)="openEditProductModal(product, $event)">Edit</button></td>
+        <td><button class="btn btn-sm btn-danger" (click)="deleteProduct(product.id, $event)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Product Details Modal -->
+<div class="modal fade" id="productDetailsModal" tabindex="-1" aria-labelledby="productDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productDetailsModalLabel">Product Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="selectedProduct">
+          <!-- Display product image or fallback image -->
+          
+          <p><strong>Name:</strong> {{ selectedProduct.name }}</p>
+          <p><strong>Price:</strong> {{ selectedProduct.price }}</p>
+          <p><strong>Stock:</strong> {{ selectedProduct.stock }}</p>
+          <p><strong>Dimensions:</strong> {{ selectedProduct.dimensions }}</p>
+          <p><strong>Description:</strong> {{ selectedProduct.description }}</p>
+          <p><strong>Delivery Time:</strong> {{ selectedProduct.delivery_time }}</p>
+          <p><strong>Material:</strong> {{ selectedProduct.material }}</p>
+          <p><strong>Category:</strong> {{ selectedProduct.category }}</p>
+          <p><strong>Weight:</strong> {{ selectedProduct.weight }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Add New Product Modal -->
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="addProduct()" enctype="multipart/form-data">
+          <!-- Product ID -->
+          <div class="mb-3">
+            <label for="productId" class="form-label">Product ID:</label>
+            <input type="text" id="productId" class="form-control" [(ngModel)]="newProduct.id" name="productId" required>
+          </div>
+          <!-- Product Name -->
+          <div class="mb-3">
+            <label for="productName" class="form-label">Name:</label>
+            <input type="text" id="productName" class="form-control" [(ngModel)]="newProduct.name" name="productName" required>
+          </div>
+          <!-- Price -->
+          <div class="mb-3">
+            <label for="productPrice" class="form-label">Price:</label>
+            <input type="number" id="productPrice" class="form-control" [(ngModel)]="newProduct.price" name="productPrice" required>
+          </div>
+          <!-- Stock -->
+          <div class="mb-3">
+            <label for="productStock" class="form-label">Stock:</label>
+            <input type="number" id="productStock" class="form-control" [(ngModel)]="newProduct.stock" name="productStock" required>
+          </div>
+          <!-- Dimensions -->
+          <div class="mb-3">
+            <label for="productDimensions" class="form-label">Dimensions:</label>
+            <input type="text" id="productDimensions" class="form-control" [(ngModel)]="newProduct.dimensions" name="productDimensions" required>
+          </div>
+
+          <!-- Description -->
+          <div class="mb-3">
+            <label for="productDescription" class="form-label">Description:</label>
+            <textarea id="productDescription" class="form-control" [(ngModel)]="newProduct.description" name="productDescription" required></textarea>
+          </div>
+
+          <!-- Delivery Time -->
+          <div class="mb-3">
+            <label for="productDeliveryTime" class="form-label">Delivery Time:</label>
+            <input type="text" id="productDeliveryTime" class="form-control" [(ngModel)]="newProduct.delivery_time" name="productDeliveryTime" required>
+          </div>
+
+          <!-- Material -->
+          <div class="mb-3">
+            <label for="productMaterial" class="form-label">Material:</label>
+            <input type="text" id="productMaterial" class="form-control" [(ngModel)]="newProduct.material" name="productMaterial" required>
+          </div>
+
+          <!-- Date Created -->
+          <div class="mb-3">
+            <label for="dateCreated" class="form-label">Date Created:</label>
+            <input type="text" id="dateCreated" class="form-control" [(ngModel)]="newProduct.dateCreated" name="dateCreated" required>
+          </div>
+
+          <!-- Category -->
+          <div class="mb-3">
+            <label for="category" class="form-label">Category:</label>
+            <input type="text" id="category" class="form-control" [(ngModel)]="newProduct.category" name="category" required>
+          </div>
+
+          <!-- Weight -->
+          <div class="mb-3">
+            <label for="weight" class="form-label">Weight:</label>
+            <input type="text" id="weight" class="form-control" [(ngModel)]="newProduct.weight" name="weight" required>
+          </div>
+
+          
+          <!-- Image Upload -->
+          <div class="mb-3">
+            <label for="productImage" class="form-label">Product Image (.jpg only):</label>
+            <input type="file" id="productImage" class="form-control" accept=".jpg" (change)="onImageSelected($event)">
+          </div>
+          <button type="submit" class="btn btn-success">Add Product</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Product Modal -->
+<div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProductModalLabel">Edit Product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form *ngIf="selectedProduct" (ngSubmit)="updateProduct()" enctype="multipart/form-data">
+          <!-- Product ID -->
+          <div class="mb-3">
+            <label for="editProductId" class="form-label">Product ID:</label>
+            <input type="text" id="editProductId" class="form-control" [(ngModel)]="selectedProduct.id" name="editProductId" readonly>
+          </div>
+          <!-- Product Name -->
+          <div class="mb-3">
+            <label for="editProductName" class="form-label">Name:</label>
+            <input type="text" id="editProductName" class="form-control" [(ngModel)]="selectedProduct.name" name="editProductName" required>
+          </div>
+          <!-- Price -->
+          <div class="mb-3">
+            <label for="editProductPrice" class="form-label">Price:</label>
+            <input type="number" id="editProductPrice" class="form-control" [(ngModel)]="selectedProduct.price" name="editProductPrice" required>
+          </div>
+
+          <!-- Stock -->
+          <div class="mb-3">
+            <label for="editProductStock" class="form-label">Stock:</label>
+            <input type="number" id="editProductStock" class="form-control" [(ngModel)]="selectedProduct.stock" name="editProductStock" required>
+          </div>
+          <!-- Dimensions -->
+          <div class="mb-3">
+            <label for="editProductDimensions" class="form-label">Dimensions:</label>
+            <input type="text" id="editProductDimensions" class="form-control" [(ngModel)]="selectedProduct.dimensions" name="editProductDimensions" required>
+          </div>
+
+          <!-- Description -->
+          <div class="mb-3">
+            <label for="editProductDescription" class="form-label">Description:</label>
+            <textarea id="editProductDescription" class="form-control" [(ngModel)]="selectedProduct.description" name="editProductDescription" required></textarea>
+          </div>
+
+          <!-- Delivery Time -->
+          <div class="mb-3">
+            <label for="editProductDeliveryTime" class="form-label">Delivery Time:</label>
+            <input type="text" id="editProductDeliveryTime" class="form-control" [(ngModel)]="selectedProduct.delivery_time" name="editProductDeliveryTime" required>
+          </div>
+
+          <!-- Material -->
+          <div class="mb-3">
+            <label for="editProductMaterial" class="form-label">Material:</label>
+            <input type="text" id="editProductMaterial" class="form-control" [(ngModel)]="selectedProduct.material" name="editProductMaterial" required>
+          </div>
+
+          <!-- Date Created -->
+          <div class="mb-3">
+            <label for="editDateCreated" class="form-label">Date Created:</label>
+            <input type="text" id="editDateCreated" class="form-control" [(ngModel)]="selectedProduct.dateCreated" name="editDateCreated" required>
+          </div>
+
+          <!-- Category -->
+          <div class="mb-3">
+            <label for="editCategory" class="form-label">Category:</label>
+            <input type="text" id="editCategory" class="form-control" [(ngModel)]="selectedProduct.category" name="editCategory" required>
+          </div>
+
+          <!-- Weight -->
+          <div class="mb-3">
+            <label for="editWeight" class="form-label">Weight:</label>
+            <input type="text" id="editWeight" class="form-control" [(ngModel)]="selectedProduct.weight" name="editWeight" required>
+          </div>
+
+          <!-- Image Upload -->
+          <div class="mb-3">
+            <label for="editProductImage" class="form-label">Product Image (.jpg only):</label>
+            <input type="file" id="editProductImage" class="form-control" accept=".jpg" (change)="onImageSelected($event)">
+          </div>
+          <button type="submit" class="btn btn-success">Update Product</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

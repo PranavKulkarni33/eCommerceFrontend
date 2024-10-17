@@ -55,3 +55,39 @@ body {
     border-color: #6c757d;
   }
   
+  /* Ensuring consistent image size and aspect ratio */
+.product-img {
+  height: 250px; /* Adjust the height as necessary */
+  object-fit: cover; /* Ensures the image covers the area while maintaining aspect ratio */
+}
+
+/* Ensures that the product card takes up the full height of its container */
+.card {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-footer {
+  background-color: #f8f9fa; /* Light footer background */
+  padding: 15px;
+}
+
+.card h5 {
+  font-weight: bold;
+}
+
+.card p {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.card-footer button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+}
