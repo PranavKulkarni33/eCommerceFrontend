@@ -1,45 +1,40 @@
-<div class="container">
-    <div class="login-form-wrapper">
-        <div class="login-card">
-            <div class="login-card-body">
-                <form (keydown.enter)="signup()" style="display: flex; flex-direction: column; width: 100%;">
-
-                    <!-- Form Title -->
-                    <div class="form-group text-center">
-                        <h4 class="form-title"><strong>Sign Up</strong></h4>
-                    </div>
-
-                    <!-- Name Input -->
-                    <div class="form-group">
+<div class="d-lg-flex half">
+    <div class="bg order-1 order-md-2 bg-image" ></div>
+    <div class="contents order-2 order-md-1">
+        <div class="container" (keydown.enter)="signup()">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-md-7">
+                  <div class="row logo">
+                    <img class="login-logo" src="../../../assets//images/favicon.png">
+                  </div>
+                  <h3>Sign Up</h3>
+                  <form action="#" method="post">
+                    <div class="form-group first">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" id="name" class="form-input" name="name" [(ngModel)]="user.name" placeholder="Enter your name">
+                        <input type="text" id="name" class="form-control" name="name" [(ngModel)]="user.name" placeholder="Enter your name">
                     </div>
-
-                    <!-- Email Input -->
-                    <div class="form-group">
+                    <div class="form-group first">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" id="email" class="form-input" name="email" [(ngModel)]="user.email" placeholder="Enter your email">
+                        <input type="email" id="email" class="form-control" name="email" [(ngModel)]="user.email" placeholder="Enter your email">
                     </div>
-
-                    <!-- Password Input -->
-                    <div class="form-group">
+                    <div class="form-group first">
                         <label for="password" class="form-label">Password</label>
-                        <input [type]="user.showPassword ? 'text' : 'password'" id="password" class="form-input" name="password" [(ngModel)]="user.password" placeholder="Enter your password">
+                        <input [type]="user.showPassword ? 'text' : 'password'" id="password" class="form-control" name="password" [(ngModel)]="user.password" placeholder="Enter your password">
                         <input type="checkbox" id="showPassword" (change)="togglePasswordVisibility()"> Show Password
                     </div>
 
                     <!-- Confirm Password Input -->
-                    <div class="form-group">
+                    <div class="form-group last mt-3 mb-3">
                         <label for="confirmPassword" class="form-label">Confirm Password</label>
-                        <input [type]="user.showPassword ? 'text' : 'password'" id="confirmPassword" class="form-input" name="confirmPassword" [(ngModel)]="confirmPassword" placeholder="Re-enter your password">
+                        <input [type]="user.showPassword ? 'text' : 'password'" id="confirmPassword" class="form-control" name="confirmPassword" [(ngModel)]="confirmPassword" placeholder="Re-enter your password">
                     </div>
 
                     <!-- Error Message -->
                     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
                     <!-- Buttons -->
-                    <button type="button" class="button-primary" (click)="signup()">Sign Up</button>
-                    <button type="button" class="button-secondary" (click)="verifyEmail()">Verify Email</button>
+                    <button type="button" class="btn btn-block btn-primary mb-3" (click)="signup()">Sign Up</button>
+                    <button type="button" class="btn btn-block btn-primary mb-3" (click)="verifyEmail()">Verify Email</button>
 
                     <!-- Login Link -->
                     <div class="row">
