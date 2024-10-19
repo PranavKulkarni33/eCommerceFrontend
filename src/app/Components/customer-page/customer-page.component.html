@@ -7,6 +7,11 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
+        <li class="nav-item">
+          <button class="btn btn-outline-light me-2" (click)="openCartModal()">
+            <i class="fas fa-shopping-cart"></i> Cart ({{ cartItems.length }})
+          </button>
+        </li>
         <li class="nav-item dropdown" *ngIf="isLoggedIn; else loginSignup">
           <button class="nav-link dropdown-toggle" id="userDropdown" role="button" (click)="toggleDropdown()">
             {{ user.name }}
@@ -39,26 +44,54 @@
   </div>
 
   <!-- Product Showcase Section -->
-<div class="container mt-5">
-  <h2 class="text-center mb-4">Our Handmade Products</h2>
-  <div class="row">
-    <div *ngFor="let product of products" class="col-md-4 mb-4">
-      <div class="card h-100 shadow-sm">
-        <img [src]="product.images[0]" class="card-img-top product-img" alt="{{ product.name }}">
-        <div class="card-body">
-          <h5 class="card-title">{{ product.name }}</h5>
-          <p class="card-text">{{ product.description }}</p>
-          <p class="card-text"><strong>Price:</strong> ${{ product.price }}</p>
-          <p class="card-text"><strong>Dimensions:</strong> {{ product.dimensions }}</p>
-          <p class="card-text"><strong>Delivery Time:</strong> {{ product.delivery_time }}</p>
-        </div>
-        <div class="card-footer text-center">
-          <button class="btn btn-primary">Buy Now</button>
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Our Handmade Products</h2>
+    <div class="row">
+      <div *ngFor="let product of products" class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <img [src]="product.images[0]" class="card-img-top product-img" alt="{{ product.name }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">{{ product.description }}</p>
+            <p class="card-text"><strong>Price:</strong> ${{ product.price }}</p>
+            <p class="card-text"><strong>Dimensions:</strong> {{ product.dimensions }}</p>
+            <p class="card-text"><strong>Delivery Time:</strong> {{ product.delivery_time }}</p>
+          </div>
+          <div class="card-footer text-center">
+            <button class="btn btn-primary" (click)="addToCart(product)">Add to Cart</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+
+  <!-- Cart Modal -->
+  <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cartModalLabel">Your Cart</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div *ngIf="cartItems.length > 0; else emptyCart">
+            <div *ngFor="let item of cartItems" class="mb-3">
+              <p><strong>{{ item.productName }}</strong> ({{ item.quantity }} x ${{ item.price }})</p>
+              <button class="btn btn-sm btn-outline-secondary" (click)="updateQuantity(item, -1)">-</button>
+              <button class="btn btn-sm btn-outline-secondary" (click)="updateQuantity(item, 1)">+</button>
+              <button class="btn btn-sm btn-outline-danger" (click)="removeFromCart(item.productID)">Remove</button>
+            </div>
+            <p><strong>Total:</strong> ${{ cartTotal }}</p>
+            <button class="btn btn-success" (click)="goToCheckout()">Go to Checkout</button>
+          </div>
+          <ng-template #emptyCart>
+            <p>Your cart is empty.</p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 
   <!-- Edit Profile Modal (only visible for logged-in users) -->

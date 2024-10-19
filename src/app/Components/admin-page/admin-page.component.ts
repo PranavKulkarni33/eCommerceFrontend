@@ -31,10 +31,15 @@ export class AdminPageComponent implements OnInit {
     weight: '',
     images: [] 
   };
-  selectedImage: File | null = null;
   addProductModal: any;
   editProductModal: any;
   productDetailsModal: any;
+  selectedImages: File[] = [];  // Array to store selected image files
+  imagePreviews: string[] = [];  // Array to store image preview URLs
+  selectedImage: File | null = null;
+  selectedImagesForAdd: File[] = [];
+  selectedImagesForEdit: File[] = [];
+
   
 
   constructor(private authService : AuthService, private router : Router, private adminService: AdminService){}
@@ -140,43 +145,71 @@ export class AdminPageComponent implements OnInit {
     }
   }
 
-   // Add a new product
+   // Add product
   addProduct(): void {
-    if (!this.selectedImage) {
-      alert('Please upload a product image.');
+    if (this.selectedImagesForAdd.length === 0 || this.selectedImagesForAdd.length > 5) {
+      alert('Please select between 1 to 5 images.');
       return;
     }
-
     const formData = new FormData();
     formData.append('product', JSON.stringify(this.newProduct));
-    formData.append('image', this.selectedImage);
-
+    this.selectedImagesForAdd.forEach(image => {
+      formData.append('images', image);
+    });
     this.adminService.addProduct(formData).subscribe(
       () => {
         alert('Product added successfully!');
-        this.getInventoryHistory(); // Refresh product list after adding
+        this.getInventoryHistory();
         this.resetNewProduct();
-        this.addProductModal.hide(); // Close the modal
+        this.addProductModal.hide();
       },
-      (error) => {
+      error => {
         console.error('Error adding product:', error);
       }
     );
   }
 
 
-
-  // Handle image selection
-  onImageSelected(event: any) {
+  onImageSelected(event: any, mode: 'add' | 'edit'): void {
     const file: File = event.target.files[0];
     if (file && file.type === 'image/jpeg') {
-      this.selectedImage = file;
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        if (mode === 'add') {
+          this.selectedImagesForAdd.push(file);
+          this.imagePreviews.push(e.target.result); // Add to preview
+        } else if (mode === 'edit') {
+          this.selectedImagesForEdit.push(file);
+          this.imagePreviews.push(e.target.result); // Add to preview
+        }
+      };
+      reader.readAsDataURL(file);
     } else {
-      alert('Please upload a .jpg image file.');
-      this.selectedImage = null;
+      alert('Please upload a .jpg image.');
+    }
+  }
+  
+
+  
+  // Add image to the selectedImages array
+  addImage() {
+    if (this.selectedImage && this.selectedImages.length < 5) {
+      this.selectedImages.push(this.selectedImage); // Add selected image to the array
+      this.selectedImage = null; // Reset the temporary image storage
+    } else {
+      alert('You can only add up to 5 images.');
     }
   }
 
+  // Remove an image from the list
+  removeImage(imagePreview: string) {
+    const index = this.imagePreviews.indexOf(imagePreview);
+    if (index !== -1) {
+      this.imagePreviews.splice(index, 1); // Remove from preview array
+      this.selectedImages.splice(index, 1); // Remove corresponding image from selected images
+    }
+  }
+ 
   // Select a product for editing
   editProduct(product: any): void {
     this.selectedProduct = { ...product };
@@ -198,6 +231,7 @@ updateProduct(): void {
     );
   }
 }
+
 
   // Delete product
   deleteProduct(productId: string, event: Event): void {
@@ -232,6 +266,8 @@ updateProduct(): void {
       images: []
     };
     this.selectedImage = null;
+    this.selectedImages = [];
+    this.imagePreviews = [];
   }
 
 

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './Components/login/login.component';
@@ -10,6 +9,7 @@ import { AdminPageComponent } from './Components/admin-page/admin-page.component
 import { FormsModule } from '@angular/forms';
 import { ConfirmSignUpComponent } from './Components/confirm-sign-up/confirm-sign-up.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CartService } from './Services/cart.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
