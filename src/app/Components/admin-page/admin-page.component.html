@@ -122,8 +122,26 @@
       </div>
       <div class="modal-body">
         <div *ngIf="selectedProduct">
-          <!-- Display product image or fallback image -->
           
+          <!-- Image Slider (Bootstrap Carousel) -->
+          <div id="productImageCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div *ngFor="let image of selectedProduct.images; let i = index" class="carousel-item" [ngClass]="{'active': i === 0}">
+                <img [src]="image" class="d-block w-100" alt="Product Image">
+              </div>
+            </div>
+            <!-- Carousel controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#productImageCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#productImageCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+          
+          <!-- Product Information -->
           <p><strong>Name:</strong> {{ selectedProduct.name }}</p>
           <p><strong>Price:</strong> {{ selectedProduct.price }}</p>
           <p><strong>Stock:</strong> {{ selectedProduct.stock }}</p>
@@ -152,11 +170,7 @@
       </div>
       <div class="modal-body">
         <form (ngSubmit)="addProduct()" enctype="multipart/form-data">
-          <!-- Product ID -->
-          <div class="mb-3">
-            <label for="productId" class="form-label">Product ID:</label>
-            <input type="text" id="productId" class="form-control" [(ngModel)]="newProduct.id" name="productId" required>
-          </div>
+          
           <!-- Product Name -->
           <div class="mb-3">
             <label for="productName" class="form-label">Name:</label>
@@ -215,12 +229,29 @@
           </div>
 
           
-          <!-- Image Upload -->
           <div class="mb-3">
-            <label for="productImage" class="form-label">Product Image (.jpg only):</label>
-            <input type="file" id="productImage" class="form-control" accept=".jpg" (change)="onImageSelected($event)">
-          </div>
-          <button type="submit" class="btn btn-success">Add Product</button>
+                <label for="productImages" class="form-label">Product Images (up to 5 images):</label>
+                
+                <!-- Add Image Button to select one image at a time -->
+                <input type="file" (change)="onImageSelected($event, 'add')" />
+                <button class="btn btn-secondary mb-2" (click)="addImage()" [disabled]="selectedImages.length >= 5 || !selectedImage">Add Image</button>
+                
+                <!-- Disable the button if 5 images are already selected -->
+                <div *ngIf="selectedImages.length >= 5" class="text-danger">
+                  You have reached the limit of 5 images.
+                </div>
+                
+                <!-- Image Preview -->
+                <div *ngIf="imagePreviews.length > 0">
+                  <div *ngFor="let image of imagePreviews" class="d-inline-block" style="position: relative;">
+                    <img [src]="image" class="img-thumbnail" style="width: 100px; height: 100px; margin-right: 5px;">
+                    <button class="btn btn-danger btn-sm" style="position: absolute; top: 0; right: 0;" (click)="removeImage(image)">X</button>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-success">Add Product</button>
+
+
         </form>
       </div>
     </div>
@@ -300,12 +331,28 @@
             <input type="text" id="editWeight" class="form-control" [(ngModel)]="selectedProduct.weight" name="editWeight" required>
           </div>
 
-          <!-- Image Upload -->
           <div class="mb-3">
-            <label for="editProductImage" class="form-label">Product Image (.jpg only):</label>
-            <input type="file" id="editProductImage" class="form-control" accept=".jpg" (change)="onImageSelected($event)">
+            <label for="productImages" class="form-label">Product Images (up to 5 images):</label>
+            
+            <!-- Add Image Button to select one image at a time -->
+            <input type="file" (change)="onImageSelected($event, 'edit')" />
+
+            <button class="btn btn-secondary mb-2" (click)="addImage()" [disabled]="selectedImages.length >= 5 || !selectedImage">Add Image</button>
+            
+            <!-- Disable the button if 5 images are already selected -->
+            <div *ngIf="selectedImages.length >= 5" class="text-danger">
+              You have reached the limit of 5 images.
+            </div>
+            
+            <!-- Image Preview -->
+            <div *ngIf="imagePreviews.length > 0">
+              <div *ngFor="let image of imagePreviews" class="d-inline-block" style="position: relative;">
+                <img [src]="image" class="img-thumbnail" style="width: 100px; height: 100px; margin-right: 5px;">
+                <button class="btn btn-danger btn-sm" style="position: absolute; top: 0; right: 0;" (click)="removeImage(image)">X</button>
+              </div>
+            </div>
           </div>
-          <button type="submit" class="btn btn-success">Update Product</button>
+         <button type="submit" class="btn btn-success" >Update Product</button>
         </form>
       </div>
     </div>
