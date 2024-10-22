@@ -294,10 +294,17 @@ export class CustomerPageComponent implements OnInit {
 
   // Proceed to checkout
   goToCheckout() {
-    if (!this.isLoggedIn) {
-      alert('You need to log in to proceed to checkout.');
-      return;
+    const cartModalElement = document.getElementById('cartModal');
+    
+    if (cartModalElement) {
+      const cartModal = bootstrap.Modal.getInstance(cartModalElement);
+  
+      if (cartModal) {
+        cartModal.hide(); 
+      }
     }
-    alert('Proceeding to checkout...');
+    this.router.navigate(['/checkoutPage']);
   }
+  
+  
 }

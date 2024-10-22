@@ -358,3 +358,46 @@
     </div>
   </div>
 </div>
+
+
+<!-- Sales History Modal -->
+<div class="modal fade" id="salesHistoryModal" tabindex="-1" aria-labelledby="salesHistoryModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="salesHistoryModalLabel">Sales History</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="sales.length > 0">
+          
+          <!-- Sale Information -->
+          <div *ngFor="let sale of sales">
+            <p><strong>Sale ID:</strong> {{ sale.saleId }}</p>
+            <p><strong>Email:</strong> {{ sale.userEmail }}</p>
+            <p><strong>Total Amount:</strong> ${{ sale.totalAmount }}</p>
+            <p><strong>Currency:</strong> {{ sale.currency }}</p>
+            <p><strong>Payment Status:</strong> {{ sale.paymentStatus }}</p>
+            <p><strong>Shipping Address:</strong> {{ sale.shippingAddress }}</p>
+            <p><strong>Shipping Method:</strong> {{ sale.shippingMethod }}</p>
+            <p><strong>Timestamp:</strong> {{ sale.timestamp }}</p>
+            
+            <!-- Products List -->
+            <h6>Products Sold:</h6>
+            <ul>
+              <li *ngFor="let product of sale.products">
+                {{ product.productName }} (x{{ product.quantity }}) - ${{ product.price }}
+              </li>
+            </ul>
+            
+            <hr> <!-- Divider between sales -->
+          </div>
+          
+        </div>
+        <p *ngIf="sales.length === 0">No sales history found.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+

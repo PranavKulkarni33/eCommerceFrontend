@@ -10,6 +10,9 @@ import { FormsModule } from '@angular/forms';
 import { ConfirmSignUpComponent } from './Components/confirm-sign-up/confirm-sign-up.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CartService } from './Services/cart.service';
+import { CheckoutPageComponent } from './Components/checkout-page/checkout-page.component';
+import { SuccessPageComponent } from './Components/success-page/success-page.component';
+import { CancelPageComponent } from './Components/cancel-page/cancel-page.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { CartService } from './Services/cart.service';
     SignupComponent,
     CustomerPageComponent,
     AdminPageComponent,
-    ConfirmSignUpComponent
+    ConfirmSignUpComponent,
+    CheckoutPageComponent,
+    SuccessPageComponent,
+    CancelPageComponent
     
   ],
   imports: [
