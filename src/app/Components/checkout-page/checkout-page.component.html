@@ -1,0 +1,79 @@
+<div class="container-fluid">
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Pebble Studios</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            
+            <li class="nav-item dropdown" *ngIf="isLoggedIn; else loginSignup">
+              <button class="nav-link dropdown-toggle" id="userDropdown" role="button" (click)="toggleDropdown()">
+                {{ user.name }}
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" [class.show]="dropdownOpen">
+                <li><a class="dropdown-item" href="#" (click)="openEditProfileModal($event)">Edit Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#" (click)="signOut($event)">Sign Out</a></li>
+              </ul>
+            </li>
+    
+            <ng-template #loginSignup>
+              <li class="nav-item">
+                <button class="btn btn-outline-light me-2" (click)="login()">Log In</button>
+              </li>
+              <li class="nav-item">
+                <button class="btn btn-outline-light me-2" (click)="signUp()">Sign Up</button>
+              </li>
+            </ng-template>
+          </ul>
+        </div>
+      </nav>
+  
+    <!-- Main Checkout Section -->
+    <div class="row mt-5">
+      <!-- Order Summary on the left -->
+      <div class="col-md-6">
+        <h3>Order Summary</h3>
+        <div *ngFor="let item of cartItems">
+          <p>{{ item.productName }} ({{ item.quantity }}x): ${{ item.price * item.quantity }}</p>
+        </div>
+        <hr />
+        <p><strong>Subtotal:</strong> ${{ subtotal }}</p>
+        <p><strong>GST (13%):</strong> ${{ gst }}</p>
+        <hr />
+        <p><strong>Total:</strong> ${{ totalPrice }}</p>
+      </div>
+  
+      <!-- Shipping Form on the right -->
+      <div class="col-md-6">
+        <h3>Shipping Details</h3>
+        <form (ngSubmit)="submitShippingDetails()">
+          <div class="mb-3">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="name" [(ngModel)]="shippingDetails.name" name="name" required />
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" [(ngModel)]="shippingDetails.address" name="address" required />
+          </div>
+          <div class="mb-3">
+            <label for="city" class="form-label">City</label>
+            <input type="text" class="form-control" id="city" [(ngModel)]="shippingDetails.city" name="city" required />
+          </div>
+          <div class="mb-3">
+            <label for="zip" class="form-label">Zip Code</label>
+            <input type="text" class="form-control" id="zip" [(ngModel)]="shippingDetails.zip" name="zip" required />
+          </div>
+          <div class="mb-3">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="text" class="form-control" id="phone" [(ngModel)]="shippingDetails.phone" name="phone" required />
+          </div>
+          <button type="submit" class="btn btn-success">Pay Now</button>
+        </form>
+      </div>
+    </div>
+    <button class="btn btn-danger" (click)="back()">Back</button>
+  </div>
+  

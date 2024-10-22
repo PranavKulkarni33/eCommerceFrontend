@@ -4,6 +4,7 @@ import { User } from 'src/app/Interfaces/user';
 import { AdminService } from 'src/app/Services/admin.service';
 import { AuthService } from 'src/app/Services/auth.service';
 import * as bootstrap from 'bootstrap';
+import { CheckoutService } from 'src/app/Services/checkout.service';
 
 
 @Component({
@@ -39,10 +40,12 @@ export class AdminPageComponent implements OnInit {
   selectedImage: File | null = null;
   selectedImagesForAdd: File[] = [];
   selectedImagesForEdit: File[] = [];
+  sales: any[] = []; // Add sales array to store sales history
+  salesHistoryModal: any;
 
   
 
-  constructor(private authService : AuthService, private router : Router, private adminService: AdminService){}
+  constructor(private authService : AuthService, private router : Router, private adminService: AdminService, private checkoutService: CheckoutService){}
   
   ngOnInit(){
     this.authService.getUser().then((user) => {
@@ -98,8 +101,26 @@ export class AdminPageComponent implements OnInit {
     this.selectedUser = null; 
   }
 
-  getSalesHistory(){
-    alert('Got Sales History!');
+  // Fetch all sales history and open the modal
+  getSalesHistory(): void {
+    this.checkoutService.getSalesHistory().subscribe(
+      (sales) => {
+        this.sales = sales;  // Assign the fetched sales to the sales array
+        this.openSalesHistoryModal();  // Open the modal after sales are fetched
+      },
+      (error) => {
+        console.error('Error fetching sales history:', error);
+      }
+    );
+  }
+
+  // Method to open the sales history modal
+  openSalesHistoryModal(): void {
+    const modalElement = document.getElementById('salesHistoryModal');
+    if (modalElement) {
+      this.salesHistoryModal = new bootstrap.Modal(modalElement);
+      this.salesHistoryModal.show();
+    }
   }
 
   // Fetch inventory
@@ -293,4 +314,6 @@ updateProduct(): void {
       alert(err);
     })
   }
+
+  
 }

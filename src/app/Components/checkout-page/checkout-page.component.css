@@ -1,0 +1,93 @@
+/* General styles */
+body {
+    background-color: #f8f9fa;
+  }
+  
+  .navbar {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-brand {
+    font-size: 1.75rem;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #ffffff !important;
+  }
+  
+  .navbar-nav .nav-item .dropdown-toggle {
+    color: #ffffff !important;
+    font-weight: bold;
+  }
+  
+  .dropdown-menu {
+    background-color: #f8f9fa;
+  }
+  
+  .dropdown-menu .dropdown-item {
+    font-size: 1rem;
+  }
+  
+  .dropdown-divider {
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  h3 {
+    color: #343a40;
+    font-weight: bold;
+  }
+  
+  .modal-header {
+    background-color: #343a40;
+    color: #ffffff;
+  }
+  
+  .modal-title {
+    font-size: 1.5rem;
+  }
+  
+  .modal-footer .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .modal-footer .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+  }
+  
+  /* Ensuring consistent image size and aspect ratio */
+.product-img {
+  height: 250px; /* Adjust the height as necessary */
+  object-fit: cover; /* Ensures the image covers the area while maintaining aspect ratio */
+}
+
+/* Ensures that the product card takes up the full height of its container */
+.card {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-footer {
+  background-color: #f8f9fa; /* Light footer background */
+  padding: 15px;
+}
+
+.card h5 {
+  font-weight: bold;
+}
+
+.card p {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.card-footer button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+}
