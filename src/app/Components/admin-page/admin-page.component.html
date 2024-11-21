@@ -1,160 +1,157 @@
 <div class="container">
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Administrative Component</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <button class="btn btn-outline-light me-2" (click)="getUsers()">Get all users accounts</button>
-            </li>
-            <li class="nav-item">
-              <button class="btn btn-outline-light me-2" (click)="getSalesHistory()">Get sales history</button>
-            </li>
-            <li class="nav-item">
-              <button class="btn btn-outline-light me-2" (click)="getInventoryHistory()">Get inventory history</button>
-            </li>
-            <li class="nav-item">
-              <button class="btn btn-outline-light me-2" (click)="openCustomerPage()">Customer Page</button>
-            </li>
-            <li class="nav-item">
-              <button class="btn btn-outline-light" (click)="signOut()">Sign Out</button>
-            </li>
-          </ul>
-        </div>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Administrative Component</a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <button class="btn btn-outline-light me-2" (click)="getUsers()">Get all users accounts</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-light me-2" (click)="getSalesHistory()">Get sales history</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-light me-2" (click)="getInventoryHistory()">Get inventory history</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-light me-2" (click)="openCustomerPage()">Customer Page</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-light" (click)="signOut()">Sign Out</button>
+          </li>
+        </ul>
       </div>
-    </nav>
-  
-    <!-- User Accounts Table -->
+    </div>
+  </nav>
+
+  <!-- User Accounts Table -->
 <div *ngIf="users.length > 0" class="mt-4">
-    <h3>User Accounts</h3>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Email</th>
-          <th>Name</th>
-          <th>Role</th>
-          <th>Edit</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users">
-          <td>{{ user.email }}</td>
-          <td>{{ user.name }}</td>
-          <td>{{ user.role }}</td>
-          <td>
-            <button class="btn btn-sm btn-primary" (click)="editUser(user)">Edit</button>
-          </td>
-          <td>
-            <button class="btn btn-sm btn-danger" (click)="deleteUser(user)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
-  
-    <!-- Edit User Form -->
-
-<div *ngIf="selectedUser" class="mt-4">
-    <h3>Edit User</h3>
-    <form>
-      <div class="mb-3">
-        <label for="email" class="form-label">Email:</label>
-        <input type="email" id="email" name="email" class="form-control" [(ngModel)]="selectedUser.email" disabled />
-      </div>
-      <div class="mb-3">
-        <label for="name" class="form-label">Name:</label>
-        <input type="text" id="name" name="name" class="form-control" [(ngModel)]="selectedUser.name" />
-      </div>
-      <div class="mb-3">
-        <label for="role" class="form-label">Role:</label>
-        <select id="role" name="role" class="form-select" [(ngModel)]="selectedUser.role">
-          <option value="Customer">Customer</option>
-          <option value="Admin">Admin</option>
-        </select>
-      </div>
-      <button type="button" class="btn btn-success" (click)="updateUser()">Update</button>
-      <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
-    </form>
-  </div>
-  
-
-
-<!-- Product List -->
-<div *ngIf="products.length > 0" class="mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3>Product Inventory</h3>
-    <button class="btn btn-success" (click)="openAddProductModal()">Add New Product</button>
-  </div>
+  <h3>User Accounts</h3>
   <table class="table table-striped">
     <thead>
       <tr>
+        <th>Email</th>
         <th>Name</th>
-        <th>Price</th>
-        <th>Stock</th>
-        <th>Dimensions</th>
+        <th>Role</th>
         <th>Edit</th>
         <th>Delete</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let product of products" (click)="openProductDetailsModal(product)">
-        <td>{{ product.name }}</td>
-        <td>{{ product.price }}</td>
-        <td>{{ product.stock }}</td>
-        <td>{{ product.dimensions }}</td>
-        <td><button class="btn btn-sm btn-primary" (click)="openEditProductModal(product, $event)">Edit</button></td>
-        <td><button class="btn btn-sm btn-danger" (click)="deleteProduct(product.id, $event)">Delete</button></td>
+      <tr *ngFor="let user of users">
+        <td>{{ user.email }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+          <button class="btn btn-sm btn-primary" (click)="editUser(user)">Edit</button>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-danger" (click)="deleteUser(user)">Delete</button>
+        </td>
       </tr>
     </tbody>
   </table>
 </div>
 
+
+  <!-- Edit User Form -->
+
+<div *ngIf="selectedUser" class="mt-4">
+  <h3>Edit User</h3>
+  <form>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email:</label>
+      <input type="email" id="email" name="email" class="form-control" [(ngModel)]="selectedUser.email" disabled />
+    </div>
+    <div class="mb-3">
+      <label for="name" class="form-label">Name:</label>
+      <input type="text" id="name" name="name" class="form-control" [(ngModel)]="selectedUser.name" />
+    </div>
+    <div class="mb-3">
+      <label for="role" class="form-label">Role:</label>
+      <select id="role" name="role" class="form-select" [(ngModel)]="selectedUser.role">
+        <option value="Customer">Customer</option>
+        <option value="Admin">Admin</option>
+      </select>
+    </div>
+    <button type="button" class="btn btn-success" (click)="updateUser()">Update</button>
+    <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+  </form>
+</div>
+
+
+
+<!-- Product List -->
+<div *ngIf="products.length > 0" class="mt-4">
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3>Product Inventory</h3>
+  <button class="btn btn-success" (click)="openAddProductModal()">Add New Product</button>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Category</th>
+      <th>Dimensions</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products" (click)="openProductDetailsModal(product)">
+      <td>{{ product.name }}</td>
+      <td>{{ product.price }}</td>
+      <td>{{ product.category }}</td>
+      <td>{{ product.dimensions }}</td>
+      <td><button class="btn btn-sm btn-primary" (click)="openEditProductModal(product, $event)">Edit</button></td>
+      <td><button class="btn btn-sm btn-danger" (click)="deleteProduct(product.id, $event)">Delete</button></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 <!-- Product Details Modal -->
 <div class="modal fade" id="productDetailsModal" tabindex="-1" aria-labelledby="productDetailsModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="productDetailsModalLabel">Product Details</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div *ngIf="selectedProduct">
-          
-          <!-- Image Slider (Bootstrap Carousel) -->
-          <div id="productImageCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div *ngFor="let image of selectedProduct.images; let i = index" class="carousel-item" [ngClass]="{'active': i === 0}">
-                <img [src]="image" class="d-block w-100" alt="Product Image">
-              </div>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="productDetailsModalLabel">Product Details</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <div *ngIf="selectedProduct">
+        
+        <!-- Image Slider (Bootstrap Carousel) -->
+        <div id="productImageCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div *ngFor="let image of selectedProduct.images; let i = index" class="carousel-item" [ngClass]="{'active': i === 0}">
+              <img [src]="image" class="d-block w-100" alt="Product Image">
             </div>
-            <!-- Carousel controls -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#productImageCarousel" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#productImageCarousel" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
           </div>
-          
-          <!-- Product Information -->
-          <p><strong>Name:</strong> {{ selectedProduct.name }}</p>
-          <p><strong>Price:</strong> {{ selectedProduct.price }}</p>
-          <p><strong>Stock:</strong> {{ selectedProduct.stock }}</p>
-          <p><strong>Dimensions:</strong> {{ selectedProduct.dimensions }}</p>
-          <p><strong>Description:</strong> {{ selectedProduct.description }}</p>
-          <p><strong>Delivery Time:</strong> {{ selectedProduct.delivery_time }}</p>
-          <p><strong>Material:</strong> {{ selectedProduct.material }}</p>
-          <p><strong>Category:</strong> {{ selectedProduct.category }}</p>
-          <p><strong>Weight:</strong> {{ selectedProduct.weight }}</p>
+          <!-- Carousel controls -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#productImageCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#productImageCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
+        
+        <!-- Product Information -->
+        <p><strong>Name:</strong> {{ selectedProduct.name }}</p>
+        <p><strong>Price:</strong> {{ selectedProduct.price }}</p>
+        <p><strong>Dimensions:</strong> {{ selectedProduct.dimensions }}</p>
+        <p><strong>Description:</strong> {{ selectedProduct.description }}</p>
+        <p><strong>Estimated Delivery:</strong> {{ selectedProduct.delivery_time }}</p>
+        <p><strong>Category:</strong> {{ selectedProduct.category }}</p>
       </div>
     </div>
   </div>
+</div>
 </div>
 
 
@@ -162,242 +159,189 @@
 
 <!-- Add New Product Modal -->
 <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form (ngSubmit)="addProduct()" enctype="multipart/form-data">
-          
-          <!-- Product Name -->
-          <div class="mb-3">
-            <label for="productName" class="form-label">Name:</label>
-            <input type="text" id="productName" class="form-control" [(ngModel)]="newProduct.name" name="productName" required>
-          </div>
-          <!-- Price -->
-          <div class="mb-3">
-            <label for="productPrice" class="form-label">Price:</label>
-            <input type="number" id="productPrice" class="form-control" [(ngModel)]="newProduct.price" name="productPrice" required>
-          </div>
-          <!-- Stock -->
-          <div class="mb-3">
-            <label for="productStock" class="form-label">Stock:</label>
-            <input type="number" id="productStock" class="form-control" [(ngModel)]="newProduct.stock" name="productStock" required>
-          </div>
-          <!-- Dimensions -->
-          <div class="mb-3">
-            <label for="productDimensions" class="form-label">Dimensions:</label>
-            <input type="text" id="productDimensions" class="form-control" [(ngModel)]="newProduct.dimensions" name="productDimensions" required>
-          </div>
-
-          <!-- Description -->
-          <div class="mb-3">
-            <label for="productDescription" class="form-label">Description:</label>
-            <textarea id="productDescription" class="form-control" [(ngModel)]="newProduct.description" name="productDescription" required></textarea>
-          </div>
-
-          <!-- Delivery Time -->
-          <div class="mb-3">
-            <label for="productDeliveryTime" class="form-label">Delivery Time:</label>
-            <input type="text" id="productDeliveryTime" class="form-control" [(ngModel)]="newProduct.delivery_time" name="productDeliveryTime" required>
-          </div>
-
-          <!-- Material -->
-          <div class="mb-3">
-            <label for="productMaterial" class="form-label">Material:</label>
-            <input type="text" id="productMaterial" class="form-control" [(ngModel)]="newProduct.material" name="productMaterial" required>
-          </div>
-
-          <!-- Date Created -->
-          <div class="mb-3">
-            <label for="dateCreated" class="form-label">Date Created:</label>
-            <input type="text" id="dateCreated" class="form-control" [(ngModel)]="newProduct.dateCreated" name="dateCreated" required>
-          </div>
-
-          <!-- Category -->
-          <div class="mb-3">
-            <label for="category" class="form-label">Category:</label>
-            <input type="text" id="category" class="form-control" [(ngModel)]="newProduct.category" name="category" required>
-          </div>
-
-          <!-- Weight -->
-          <div class="mb-3">
-            <label for="weight" class="form-label">Weight:</label>
-            <input type="text" id="weight" class="form-control" [(ngModel)]="newProduct.weight" name="weight" required>
-          </div>
-
-          
-          <div class="mb-3">
-                <label for="productImages" class="form-label">Product Images (up to 5 images):</label>
-                
-                <!-- Add Image Button to select one image at a time -->
-                <input type="file" (change)="onImageSelected($event, 'add')" />
-                <button class="btn btn-secondary mb-2" (click)="addImage()" [disabled]="selectedImages.length >= 5 || !selectedImage">Add Image</button>
-                
-                <!-- Disable the button if 5 images are already selected -->
-                <div *ngIf="selectedImages.length >= 5" class="text-danger">
-                  You have reached the limit of 5 images.
-                </div>
-                
-                <!-- Image Preview -->
-                <div *ngIf="imagePreviews.length > 0">
-                  <div *ngFor="let image of imagePreviews" class="d-inline-block" style="position: relative;">
-                    <img [src]="image" class="img-thumbnail" style="width: 100px; height: 100px; margin-right: 5px;">
-                    <button class="btn btn-danger btn-sm" style="position: absolute; top: 0; right: 0;" (click)="removeImage(image)">X</button>
-                  </div>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="addProduct()" enctype="multipart/form-data">
+        
+        <!-- Product Name -->
+        <div class="mb-3">
+          <label for="productName" class="form-label">Name:</label>
+          <input type="text" id="productName" class="form-control" [(ngModel)]="newProduct.name" name="productName" required>
+        </div>
+        <!-- Price -->
+        <div class="mb-3">
+          <label for="productPrice" class="form-label">Price:</label>
+          <input type="number" id="productPrice" class="form-control" [(ngModel)]="newProduct.price" name="productPrice" required>
+        </div>
+        <!-- Dimensions -->
+        <div class="mb-3">
+          <label for="productDimensions" class="form-label">Dimensions:</label>
+          <input type="text" id="productDimensions" class="form-control" [(ngModel)]="newProduct.dimensions" name="productDimensions" required>
+        </div>
+        <!-- Description -->
+        <div class="mb-3">
+          <label for="productDescription" class="form-label">Description:</label>
+          <textarea id="productDescription" class="form-control" [(ngModel)]="newProduct.description" name="productDescription" required></textarea>
+        </div>
+        <!-- Delivery Time -->
+        <div class="mb-3">
+          <label for="productDeliveryTime" class="form-label">Estimated Delivery:</label>
+          <input type="text" id="productDeliveryTime" class="form-control" [(ngModel)]="newProduct.delivery_time" name="productDeliveryTime" required>
+        </div>
+        <!-- Category Dropdown -->
+        <div class="mb-3">
+          <label for="category" class="form-label">Category:</label>
+          <select id="category" class="form-select" [(ngModel)]="newProduct.category" name="category" required>
+            <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+          </select>
+        </div>
+        <div class="mb-3">
+              <label for="productImages" class="form-label">Product Images (up to 5 images):</label>
+              
+              <!-- Add Image Button to select one image at a time -->
+              <input type="file" (change)="onImageSelected($event, 'add')" />
+              <button class="btn btn-secondary mb-2" (click)="addImage()" [disabled]="selectedImages.length >= 5 || !selectedImage">Add Image</button>
+              
+              <!-- Disable the button if 5 images are already selected -->
+              <div *ngIf="selectedImages.length >= 5" class="text-danger">
+                You have reached the limit of 5 images.
+              </div>
+              
+              <!-- Image Preview -->
+              <div *ngIf="imagePreviews.length > 0">
+                <div *ngFor="let image of imagePreviews" class="d-inline-block" style="position: relative;">
+                  <img [src]="image" class="img-thumbnail" style="width: 100px; height: 100px; margin-right: 5px;">
+                  <button class="btn btn-danger btn-sm" style="position: absolute; top: 0; right: 0;" (click)="removeImage(image)">X</button>
                 </div>
               </div>
-              <button type="submit" class="btn btn-success">Add Product</button>
+            </div>
+            <button type="submit" class="btn btn-success">Add Product</button>
 
 
-        </form>
-      </div>
+      </form>
     </div>
   </div>
+</div>
 </div>
 
 <!-- Edit Product Modal -->
 <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editProductModalLabel">Edit Product</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form *ngIf="selectedProduct" (ngSubmit)="updateProduct()" enctype="multipart/form-data">
-          <!-- Product ID -->
-          <div class="mb-3">
-            <label for="editProductId" class="form-label">Product ID:</label>
-            <input type="text" id="editProductId" class="form-control" [(ngModel)]="selectedProduct.id" name="editProductId" readonly>
-          </div>
-          <!-- Product Name -->
-          <div class="mb-3">
-            <label for="editProductName" class="form-label">Name:</label>
-            <input type="text" id="editProductName" class="form-control" [(ngModel)]="selectedProduct.name" name="editProductName" required>
-          </div>
-          <!-- Price -->
-          <div class="mb-3">
-            <label for="editProductPrice" class="form-label">Price:</label>
-            <input type="number" id="editProductPrice" class="form-control" [(ngModel)]="selectedProduct.price" name="editProductPrice" required>
-          </div>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="editProductModalLabel">Edit Product</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <form *ngIf="selectedProduct" (ngSubmit)="updateProduct()" enctype="multipart/form-data">
+        <!-- Product Name -->
+        <div class="mb-3">
+          <label for="editProductName" class="form-label">Name:</label>
+          <input type="text" id="editProductName" class="form-control" [(ngModel)]="selectedProduct.name" name="editProductName" required>
+        </div>
+        <!-- Price -->
+        <div class="mb-3">
+          <label for="editProductPrice" class="form-label">Price:</label>
+          <input type="number" id="editProductPrice" class="form-control" [(ngModel)]="selectedProduct.price" name="editProductPrice" required>
+        </div>
 
-          <!-- Stock -->
-          <div class="mb-3">
-            <label for="editProductStock" class="form-label">Stock:</label>
-            <input type="number" id="editProductStock" class="form-control" [(ngModel)]="selectedProduct.stock" name="editProductStock" required>
-          </div>
-          <!-- Dimensions -->
-          <div class="mb-3">
-            <label for="editProductDimensions" class="form-label">Dimensions:</label>
-            <input type="text" id="editProductDimensions" class="form-control" [(ngModel)]="selectedProduct.dimensions" name="editProductDimensions" required>
-          </div>
+        <!-- Dimensions -->
+        <div class="mb-3">
+          <label for="editProductDimensions" class="form-label">Dimensions:</label>
+          <input type="text" id="editProductDimensions" class="form-control" [(ngModel)]="selectedProduct.dimensions" name="editProductDimensions" required>
+        </div>
 
-          <!-- Description -->
-          <div class="mb-3">
-            <label for="editProductDescription" class="form-label">Description:</label>
-            <textarea id="editProductDescription" class="form-control" [(ngModel)]="selectedProduct.description" name="editProductDescription" required></textarea>
+        <!-- Description -->
+        <div class="mb-3">
+          <label for="editProductDescription" class="form-label">Description:</label>
+          <textarea id="editProductDescription" class="form-control" [(ngModel)]="selectedProduct.description" name="editProductDescription" required></textarea>
+        </div>
+
+        <!-- Delivery Time -->
+        <div class="mb-3">
+          <label for="editProductDeliveryTime" class="form-label">Delivery Time:</label>
+          <input type="text" id="editProductDeliveryTime" class="form-control" [(ngModel)]="selectedProduct.delivery_time" name="editProductDeliveryTime" required>
+        </div>
+
+        <!-- Category Dropdown -->
+        <div class="mb-3">
+          <label for="editCategory" class="form-label">Category:</label>
+          <select id="editCategory" class="form-select" [(ngModel)]="selectedProduct.category" name="editCategory" required>
+            <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+          </select>
+        </div>
+
+
+        <div class="mb-3">
+          <label for="productImages" class="form-label">Product Images (up to 5 images):</label>
+          
+          <!-- Add Image Button to select one image at a time -->
+          <input type="file" (change)="onImageSelected($event, 'edit')" />
+
+          <button class="btn btn-secondary mb-2" (click)="addImage()" [disabled]="selectedImages.length >= 5 || !selectedImage">Add Image</button>
+          
+          <!-- Disable the button if 5 images are already selected -->
+          <div *ngIf="selectedImages.length >= 5" class="text-danger">
+            You have reached the limit of 5 images.
           </div>
-
-          <!-- Delivery Time -->
-          <div class="mb-3">
-            <label for="editProductDeliveryTime" class="form-label">Delivery Time:</label>
-            <input type="text" id="editProductDeliveryTime" class="form-control" [(ngModel)]="selectedProduct.delivery_time" name="editProductDeliveryTime" required>
-          </div>
-
-          <!-- Material -->
-          <div class="mb-3">
-            <label for="editProductMaterial" class="form-label">Material:</label>
-            <input type="text" id="editProductMaterial" class="form-control" [(ngModel)]="selectedProduct.material" name="editProductMaterial" required>
-          </div>
-
-          <!-- Date Created -->
-          <div class="mb-3">
-            <label for="editDateCreated" class="form-label">Date Created:</label>
-            <input type="text" id="editDateCreated" class="form-control" [(ngModel)]="selectedProduct.dateCreated" name="editDateCreated" required>
-          </div>
-
-          <!-- Category -->
-          <div class="mb-3">
-            <label for="editCategory" class="form-label">Category:</label>
-            <input type="text" id="editCategory" class="form-control" [(ngModel)]="selectedProduct.category" name="editCategory" required>
-          </div>
-
-          <!-- Weight -->
-          <div class="mb-3">
-            <label for="editWeight" class="form-label">Weight:</label>
-            <input type="text" id="editWeight" class="form-control" [(ngModel)]="selectedProduct.weight" name="editWeight" required>
-          </div>
-
-          <div class="mb-3">
-            <label for="productImages" class="form-label">Product Images (up to 5 images):</label>
-            
-            <!-- Add Image Button to select one image at a time -->
-            <input type="file" (change)="onImageSelected($event, 'edit')" />
-
-            <button class="btn btn-secondary mb-2" (click)="addImage()" [disabled]="selectedImages.length >= 5 || !selectedImage">Add Image</button>
-            
-            <!-- Disable the button if 5 images are already selected -->
-            <div *ngIf="selectedImages.length >= 5" class="text-danger">
-              You have reached the limit of 5 images.
-            </div>
-            
-            <!-- Image Preview -->
-            <div *ngIf="imagePreviews.length > 0">
-              <div *ngFor="let image of imagePreviews" class="d-inline-block" style="position: relative;">
-                <img [src]="image" class="img-thumbnail" style="width: 100px; height: 100px; margin-right: 5px;">
-                <button class="btn btn-danger btn-sm" style="position: absolute; top: 0; right: 0;" (click)="removeImage(image)">X</button>
-              </div>
+          
+          <!-- Image Preview -->
+          <div *ngIf="imagePreviews.length > 0">
+            <div *ngFor="let image of imagePreviews" class="d-inline-block" style="position: relative;">
+              <img [src]="image" class="img-thumbnail" style="width: 100px; height: 100px; margin-right: 5px;">
+              <button class="btn btn-danger btn-sm" style="position: absolute; top: 0; right: 0;" (click)="removeImage(image)">X</button>
             </div>
           </div>
-         <button type="submit" class="btn btn-success" >Update Product</button>
-        </form>
-      </div>
+        </div>
+       <button type="submit" class="btn btn-success" >Update Product</button>
+      </form>
     </div>
   </div>
+</div>
 </div>
 
 
 <!-- Sales History Modal -->
 <div class="modal fade" id="salesHistoryModal" tabindex="-1" aria-labelledby="salesHistoryModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="salesHistoryModalLabel">Sales History</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div *ngIf="sales.length > 0">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="salesHistoryModalLabel">Sales History</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <div *ngIf="sales.length > 0">
+        
+        <!-- Sale Information -->
+        <div *ngFor="let sale of sales">
+          <p><strong>Sale ID:</strong> {{ sale.salesId }}</p>
+          <p><strong>Email:</strong> {{ sale.userEmail }}</p>
+          <p><strong>Total Amount:</strong> ${{ sale.totalAmount }}</p>
+          <p><strong>Currency:</strong> {{ sale.currency }}</p>
+          <p><strong>Payment Status:</strong> {{ sale.paymentStatus }}</p>
+          <p><strong>Shipping Address:</strong> {{ sale.shippingAddress }}</p>
+          <p><strong>Shipping Method:</strong> {{ sale.shippingMethod }}</p>
+          <p><strong>Timestamp:</strong> {{ sale.timestamp }}</p>
           
-          <!-- Sale Information -->
-          <div *ngFor="let sale of sales">
-            <p><strong>Sale ID:</strong> {{ sale.saleId }}</p>
-            <p><strong>Email:</strong> {{ sale.userEmail }}</p>
-            <p><strong>Total Amount:</strong> ${{ sale.totalAmount }}</p>
-            <p><strong>Currency:</strong> {{ sale.currency }}</p>
-            <p><strong>Payment Status:</strong> {{ sale.paymentStatus }}</p>
-            <p><strong>Shipping Address:</strong> {{ sale.shippingAddress }}</p>
-            <p><strong>Shipping Method:</strong> {{ sale.shippingMethod }}</p>
-            <p><strong>Timestamp:</strong> {{ sale.timestamp }}</p>
-            
-            <!-- Products List -->
-            <h6>Products Sold:</h6>
-            <ul>
-              <li *ngFor="let product of sale.products">
-                {{ product.productName }} (x{{ product.quantity }}) - ${{ product.price }}
-              </li>
-            </ul>
-            
-            <hr> <!-- Divider between sales -->
-          </div>
+          <!-- Products List -->
+          <h6>Products Sold:</h6>
+          <ul>
+            <li *ngFor="let product of sale.products">
+              {{ product.productName }} (x{{ product.quantity }}) - ${{ product.price }}
+            </li>
+          </ul>
           
+          <hr> <!-- Divider between sales -->
         </div>
-        <p *ngIf="sales.length === 0">No sales history found.</p>
+        
       </div>
+      <p *ngIf="sales.length === 0">No sales history found.</p>
     </div>
   </div>
 </div>
-
-
+</div>
