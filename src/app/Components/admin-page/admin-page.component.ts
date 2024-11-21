@@ -24,14 +24,17 @@ export class AdminPageComponent implements OnInit {
     price: 0,
     description: '',
     dimensions: '',
-    stock: 0,
-    delivery_time: '',
-    material: '',
+    delivery_time: '',   
     category: '',
-    dateCreated: '',
-    weight: '',
     images: [] 
   };
+  categories: string[] = [
+    'Paintings',
+    'Wall Decor',
+    'Home and Living',
+    'Holidays',
+    'Special Occations'
+  ];
   addProductModal: any;
   editProductModal: any;
   productDetailsModal: any;
@@ -86,7 +89,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   deleteUser(user: User): void {
-    if (confirm(`Are you sure you want to delete user ${user.email}?`)) {
+    if (confirm("Are you sure you want to delete user ${user.email}?")) {
       this.adminService.deleteUser(user.email).then(() => {
         alert('User deleted successfully!');
         this.getUsers(); 
@@ -127,7 +130,7 @@ export class AdminPageComponent implements OnInit {
   getInventoryHistory(): void {
     this.adminService.getAllProducts().subscribe(
       (products) => {
-        this.products = products.Items; // Assuming response contains `Items`
+        this.products = products.Items; // Assuming response contains Items
         // Show the "Add New Product" button when products are loaded
       },
       (error) => {
@@ -278,12 +281,8 @@ updateProduct(): void {
       price: 0,
       description: '',
       dimensions: '',
-      stock: 0,
       delivery_time: '',
-      material: '',
       category: '',
-      dateCreated: '',
-      weight: '',
       images: []
     };
     this.selectedImage = null;
