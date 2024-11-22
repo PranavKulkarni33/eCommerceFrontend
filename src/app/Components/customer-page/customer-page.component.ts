@@ -26,6 +26,12 @@ export class CustomerPageComponent implements OnInit {
   cartItems: CartItem[] = [];
   cartTotal: number = 0;
   cartModal: any;
+  selectedProduct: any = null;
+  filteredProducts: any[] = [];
+  categories: string[] = ['Paintings', 'Wall Decor', 'Home and Living', 'Holidays', 'Special Occations'];
+  selectedCategory: string = ''; 
+  selectedPriceRange: string = ''; 
+  searchQuery: string = '';
 
   constructor(
     private authService: AuthService,
@@ -151,11 +157,59 @@ export class CustomerPageComponent implements OnInit {
     this.customerService.getProducts().subscribe(
       (data) => {
         this.products = data.Items;
+        this.filteredProducts = [...this.products]; 
       },
       (err) => {
         console.error('Error fetching products', err);
       }
     );
+  }
+
+  // Apply filters based on selected category and price range
+  applyFilters() {
+    this.filteredProducts = this.products.filter((product) => {
+      const categoryMatch = this.selectedCategory ? product.category === this.selectedCategory : true;
+
+      const priceMatch = (() => {
+        switch (this.selectedPriceRange) {
+          case 'under25':
+            return product.price < 25;
+          case '26to50':
+            return product.price >= 26 && product.price <= 50;
+          case '51to100':
+            return product.price >= 51 && product.price <= 100;
+          case 'over100':
+            return product.price > 100;
+          default:
+            return true;
+        }
+      })();
+
+      return categoryMatch && priceMatch;
+    });
+  }
+
+  // Perform search by product name
+  performSearch() {
+    if (this.searchQuery.trim() === '') {
+      // Reset to show all products if search is empty
+      this.filteredProducts = [...this.products];
+    } else {
+      // Filter products based on the search query
+      this.filteredProducts = this.products.filter(product =>
+        product.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    }
+  }
+
+  // Open the product details modal
+  openProductDetailsModal(product: any) {
+    this.selectedProduct = product;
+    const modalElement = document.getElementById('productDetailsModal');
+    if (modalElement) {
+      const productModal = new bootstrap.Modal(modalElement);
+      productModal.show();
+    }
   }
 
   // Cart Methods

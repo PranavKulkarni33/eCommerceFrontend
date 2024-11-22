@@ -47,27 +47,141 @@
     </div>
   </div>
 
-  <!-- Product Showcase Section -->
-  <div class="container mt-5">
-    <h2 class="text-center mb-4">Our Handmade Products</h2>
-    <div class="row">
-      <div *ngFor="let product of products" class="col-md-4 mb-4">
-        <div class="card h-100 shadow-sm">
+<!-- Search Bar -->
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-10">
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Search products by name..." 
+        [(ngModel)]="searchQuery"
+        (keyup.enter)="performSearch()"
+      />
+    </div>
+    <div class="col-md-2">
+      <button 
+        class="btn btn-primary w-100" 
+        (click)="performSearch()"
+      >
+        Search
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+  <!-- Filter Section -->
+<div class="container mt-4">
+  <h4>Filter Products</h4>
+  <div class="row">
+    <!-- Category Filter -->
+    <div class="col-md-6">
+      <label for="categoryFilter" class="form-label">Category</label>
+      <select id="categoryFilter" class="form-select" [(ngModel)]="selectedCategory" (change)="applyFilters()">
+        <option value="">All Categories</option>
+        <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+      </select>
+    </div>
+
+    <!-- Price Filter -->
+    <div class="col-md-6">
+      <label for="priceFilter" class="form-label">Price</label>
+      <select id="priceFilter" class="form-select" [(ngModel)]="selectedPriceRange" (change)="applyFilters()">
+        <option value="">All Prices</option>
+        <option value="under25">Under $25</option>
+        <option value="26to50">$26 - $50</option>
+        <option value="51to100">$51 - $100</option>
+        <option value="over100">More than $100</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- Product Showcase Section -->
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Our Handmade Products</h2>
+  <div class="row">
+    <!-- Check if there are products -->
+    <ng-container *ngIf="filteredProducts.length > 0; else noProducts">
+      <div class="col-md-4 mb-4" *ngFor="let product of filteredProducts">
+        <div class="card h-100 shadow-sm" (click)="openProductDetailsModal(product)" style="cursor: pointer;">
           <img [src]="product.images[0]" class="card-img-top product-img" alt="{{ product.name }}">
           <div class="card-body">
-            <h5 class="card-title">{{ product.name }}</h5>
+            
+            <h5 class="card-title text-center">{{ product.name }}</h5>
             <p class="card-text">{{ product.description }}</p>
             <p class="card-text"><strong>Price:</strong> ${{ product.price }}</p>
-            <p class="card-text"><strong>Dimensions:</strong> {{ product.dimensions }}</p>
-            <p class="card-text"><strong>Delivery Time:</strong> {{ product.delivery_time }}</p>
+            <p class="card-text"><strong>Category:</strong> {{ product.category }}</p>
+            <p class="card-text"><strong>Estimated Delivery:</strong> {{ product.delivery_time }}</p>
           </div>
           <div class="card-footer text-center">
-            <button class="btn btn-primary" (click)="addToCart(product)">Add to Cart</button>
+            <button class="btn btn-primary" (click)="openProductDetailsModal(product)">More Details</button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- No Products Found -->
+    <ng-template #noProducts>
+      <div class="text-center">
+        <p>No products found.</p>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+
+
+
+
+<!-- Product Details Modal -->
+<div class="modal fade" id="productDetailsModal" tabindex="-1" aria-labelledby="productDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productDetailsModalLabel">{{ selectedProduct?.name }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <!-- Image Section -->
+          <div class="col-md-6 text-center">
+            <div *ngIf="selectedProduct?.images?.length > 0">
+              <div id="productImageCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div *ngFor="let image of selectedProduct.images; let i = index" class="carousel-item" [ngClass]="{ 'active': i === 0 }">
+                    <img [src]="image" class="img-fluid product-modal-image" alt="{{ selectedProduct.name }}">
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#productImageCarousel" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#productImageCarousel" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description Section -->
+          <div class="col-md-6">
+            <h4>{{ selectedProduct?.name }}</h4>
+            <p><strong>Description:</strong> {{ selectedProduct?.description }}</p>
+            <p><strong>Price:</strong> ${{ selectedProduct?.price }}</p>
+            <p><strong>Dimensions:</strong> {{ selectedProduct?.dimensions }}</p>
+            <p><strong>Estimated Delivery:</strong> {{ selectedProduct?.delivery_time }}</p>
+            <p><strong>Dimentions:</strong> {{ selectedProduct?.dimensions }}</p>
+            <button class="btn btn-primary mt-3 w-100" (click)="addToCart(selectedProduct)">Add to Cart</button>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
 
   <!-- Cart Modal -->
   <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
