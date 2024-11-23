@@ -1,7 +1,10 @@
-<div class="container-fluid">
+<div class="container-fluid ps-0 pe-0">
   <!-- Navigation Bar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Pebble Studios</a>
+  <nav class="navbar navbar-expand-lg navbar-dark ">
+    <a class="navbar-brand" href="#">
+      <img src="../../../assets/images/favicon.png" class="me-1">
+      Pebble Studios
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -9,8 +12,9 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           
-          <button class="btn btn-outline-light me-2" (click)="openCartModal()">
-            <i class="fas fa-shopping-cart"></i> Cart ({{ cartItems.length }})
+          <button class="btn me-2 position-relative" (click)="openCartModal()">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-text">{{ cartItems.length }}</span>
           </button>
           
         </li>
@@ -26,11 +30,11 @@
         </li>
 
         <ng-template #loginSignup>
-          <li class="nav-item">
-            <button class="btn btn-outline-light me-2" (click)="login()">Log In</button>
+          <li class="nav-item ms-2">
+            <button class="btn btn-outline-light me-2 hov-green" (click)="login()">Log In</button>
           </li>
           <li class="nav-item">
-            <button class="btn btn-outline-light me-2" (click)="signUp()">Sign Up</button>
+            <button class="btn btn-outline-light me-2 hov-green" (click)="signUp()">Sign Up</button>
           </li>
           
           
@@ -39,85 +43,80 @@
     </div>
   </nav>
 
-  <!-- Main Content (same for logged-in and not logged-in users) -->
-  <div class="row justify-content-center my-5">
-    <div class="col-4">
-      <h3>Welcome to Pebble Studios</h3>
-      <p>Browse our collection of handmade arts and crafts. You can edit your profile or sign out from the dropdown menu (if logged in).</p>
+  <div class="container-fluid">
+    <div class="d-flex flex-row filter-row">
+
+
+      <!-- Filter Section -->
+      <div class="row">
+          <!-- Category Filter -->
+          <div class="col-md-6">
+            <!-- <label for="categoryFilter" class="form-label">Category</label> -->
+            <select id="categoryFilter" class="form-select" [(ngModel)]="selectedCategory" (change)="applyFilters()">
+              <option value="">All Categories</option>
+              <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+            </select>
+          </div>
+      
+          <!-- Price Filter -->
+          <div class="col-md-6">
+            <!-- <label for="priceFilter" class="form-label">Price</label> -->
+            <select id="priceFilter" class="form-select" [(ngModel)]="selectedPriceRange" (change)="applyFilters()">
+              <option value="">All Prices</option>
+              <option value="under25">Under $25</option>
+              <option value="26to50">$26 - $50</option>
+              <option value="51to100">$51 - $100</option>
+              <option value="over100">More than $100</option>
+            </select>
+          </div>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="d-flex flex-row col-md-3 col-sm-5">
+        <input 
+          type="text" 
+          class="form-control w-90" 
+          placeholder="Search products by name" 
+          [(ngModel)]="searchQuery"
+          (keyup.enter)="performSearch()"
+          style="border-top-right-radius: 0%; border-bottom-right-radius: 0%;"
+        />
+        <button class="btn brown-btn" (click)="performSearch()"
+        style="border-top-left-radius: 0%; border-bottom-left-radius: 0%;">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
+
     </div>
   </div>
 
-<!-- Search Bar -->
-<div class="container mt-4">
-  <div class="row">
-    <div class="col-md-10">
-      <input 
-        type="text" 
-        class="form-control" 
-        placeholder="Search products by name..." 
-        [(ngModel)]="searchQuery"
-        (keyup.enter)="performSearch()"
-      />
-    </div>
-    <div class="col-md-2">
-      <button 
-        class="btn btn-primary w-100" 
-        (click)="performSearch()"
-      >
-        Search
-      </button>
-    </div>
-  </div>
-</div>
 
 
 
-  <!-- Filter Section -->
-<div class="container mt-4">
-  <h4>Filter Products</h4>
-  <div class="row">
-    <!-- Category Filter -->
-    <div class="col-md-6">
-      <label for="categoryFilter" class="form-label">Category</label>
-      <select id="categoryFilter" class="form-select" [(ngModel)]="selectedCategory" (change)="applyFilters()">
-        <option value="">All Categories</option>
-        <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
-      </select>
-    </div>
 
-    <!-- Price Filter -->
-    <div class="col-md-6">
-      <label for="priceFilter" class="form-label">Price</label>
-      <select id="priceFilter" class="form-select" [(ngModel)]="selectedPriceRange" (change)="applyFilters()">
-        <option value="">All Prices</option>
-        <option value="under25">Under $25</option>
-        <option value="26to50">$26 - $50</option>
-        <option value="51to100">$51 - $100</option>
-        <option value="over100">More than $100</option>
-      </select>
-    </div>
-  </div>
-</div>
+
+  
+
 
 <!-- Product Showcase Section -->
-<div class="container mt-5">
-  <h2 class="text-center mb-4">Our Handmade Products</h2>
+<div class="container">
+  <h1 class="text-center mb-4 headline">We believe that creation has no limit</h1>
   <div class="row">
     <!-- Check if there are products -->
     <ng-container *ngIf="filteredProducts.length > 0; else noProducts">
-      <div class="col-md-4 mb-4" *ngFor="let product of filteredProducts">
+      <div class="col-md-3 col-sm-6 col-xs-12 mb-4" *ngFor="let product of filteredProducts">
         <div class="card h-100 shadow-sm" (click)="openProductDetailsModal(product)" style="cursor: pointer;">
           <img [src]="product.images[0]" class="card-img-top product-img" alt="{{ product.name }}">
           <div class="card-body">
             
             <h5 class="card-title text-center">{{ product.name }}</h5>
-            <p class="card-text">{{ product.description }}</p>
+            <p class="card-text prod-description">{{ product.description }}</p>
             <p class="card-text"><strong>Price:</strong> ${{ product.price }}</p>
-            <p class="card-text"><strong>Category:</strong> {{ product.category }}</p>
-            <p class="card-text"><strong>Estimated Delivery:</strong> {{ product.delivery_time }}</p>
+            <!-- <p class="card-text"><strong>Category:</strong> {{ product.category }}</p> -->
+            <!-- <p class="card-text"><strong>Estimated Delivery:</strong> {{ product.delivery_time }}</p> -->
           </div>
           <div class="card-footer text-center">
-            <button class="btn btn-primary" (click)="openProductDetailsModal(product)">More Details</button>
+            <button class="btn brown-btn" (click)="openProductDetailsModal(product)">More Details</button>
           </div>
         </div>
       </div>
@@ -131,7 +130,13 @@
   </div>
 </div>
 
-
+  <!-- Main Content (same for logged-in and not logged-in users) -->
+  <!-- <div class="row justify-content-center my-5">
+    <div class="col-4">
+      <h3>Welcome to Pebble Studios</h3>
+      <p>Browse our collection of handmade arts and crafts. You can edit your profile or sign out from the dropdown menu (if logged in).</p>
+    </div>
+  </div> -->
 
 
 
