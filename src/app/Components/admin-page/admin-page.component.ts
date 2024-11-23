@@ -33,7 +33,7 @@ export class AdminPageComponent implements OnInit {
     'Wall Decor',
     'Home and Living',
     'Holidays',
-    'Special Occations'
+    'Special Occasions'
   ];
   addProductModal: any;
   editProductModal: any;

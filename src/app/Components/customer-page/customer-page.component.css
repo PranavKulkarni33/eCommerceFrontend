@@ -1,22 +1,73 @@
 /* General styles */
-body {
-    background-color: #f8f9fa;
-  }
   
   .navbar {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem 1rem;
+    background-color: #403a34f6;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .navbar img{
+    width: 2.7rem;
+    height: auto;
   }
   
   .navbar-brand {
     font-size: 1.75rem;
-    font-weight: bold;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #ffffff !important;
+    color: #f1f1f1 !important;
+    display: flex;
+    align-content: center;
+  }
+
+  .navbar-nav{
+    display: flex;
+    align-items: center;
   }
   
   .navbar-nav .nav-item .dropdown-toggle {
-    color: #ffffff !important;
+    color: #f1f1f1 !important;
     font-weight: bold;
+  }
+
+  .fa-shopping-cart{
+    font-size: 2rem;
+    color: #f1f1f1;
+    transition: 0.5s;
+  }
+
+  .fa-shopping-cart:hover{
+    transform: scale(1.2);
+  }
+
+  .position-relative {
+    position: relative;
+  }
+  
+  .cart-text {
+    font-size: 1rem;
+    position: absolute;
+    top: -5%; 
+    left: 75%; 
+    width: 1.5rem; 
+    height: 1.5rem;
+    line-height: 1.5rem;
+    text-align: center; 
+    background: #b93030e9; 
+    border-radius: 50%; 
+    color: #f1f1f1;
+    font-weight: bold;
+  }
+
+  .hov-green{
+    transition: 0.5s;
+  }
+  .hov-green:hover{
+    background-color: #213c22;
+    color: #f1f1f1;
+    border: solid 0.1rem #213c22;
   }
   
   .dropdown-menu {
@@ -25,10 +76,27 @@ body {
   
   .dropdown-menu .dropdown-item {
     font-size: 1rem;
+    transition: 0.5s;
+  }
+
+  .dropdown-menu .dropdown-item:hover {
+    background-color: #bfc0c0 ;
   }
   
   .dropdown-divider {
     border-top: 1px solid #e0e0e0;
+  }
+
+  /* ======= Filter Row ========== */
+
+  .filter-row{
+    padding: 1rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .filter-row select{
+    padding: 0.8rem ;
   }
   
   h3 {
@@ -54,17 +122,18 @@ body {
     background-color: #6c757d;
     border-color: #6c757d;
   }
-  
-  /* Ensuring consistent image size and aspect ratio */
+
+/* ============= Product Card ============== */
+
 .product-img {
-  height: 250px; /* Adjust the height as necessary */
-  object-fit: cover; /* Ensures the image covers the area while maintaining aspect ratio */
+  height: 250px; 
+  object-fit: cover;
 }
 
-/* Ensures that the product card takes up the full height of its container */
 .card {
   border-radius: 10px;
   overflow: hidden;
+  background-color: #f1f1f1;
 }
 
 .card-body {
@@ -72,7 +141,7 @@ body {
 }
 
 .card-footer {
-  background-color: #f8f9fa; /* Light footer background */
+  background-color: #e4e4e5;
   padding: 15px;
 }
 
@@ -85,9 +154,18 @@ body {
   color: #6c757d;
 }
 
+.prod-description{
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
 .card-footer button {
   width: 100%;
-  padding: 10px;
+  padding: 5px;
   font-size: 16px;
   border-radius: 5px;
 }

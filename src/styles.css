@@ -58,16 +58,17 @@ body{
     color: #213c22;
 }
   
-.half .btn {
+.brown-btn {
     height: 54px;
     padding:0 30px;
     background-color: #523b35;
-    border-radius: 20px;
+    border-radius: 10px;
     border: 2px solid #523b35;
     transition: 0.3s;
+    color: #f1f1f1;
 }
 
-.half .btn:hover{
+.brown-btn:hover{
     background-color: #213c22;
     color: #f1f1f1;
 }
@@ -79,3 +80,13 @@ body{
     font-size: 14px; 
 }
   
+/* =============== MAIN PAGES =============== */
+
+.headline {
+  font-family: "Parisienne", cursive;
+  font-weight: 900;   
+  font-style: normal;
+  color: #523b35;
+  /* text-shadow:2px  2px 0 #213c22; */
+  text-decoration:  none;
+}

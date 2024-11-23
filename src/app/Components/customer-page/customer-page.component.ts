@@ -28,7 +28,7 @@ export class CustomerPageComponent implements OnInit {
   cartModal: any;
   selectedProduct: any = null;
   filteredProducts: any[] = [];
-  categories: string[] = ['Paintings', 'Wall Decor', 'Home and Living', 'Holidays', 'Special Occations'];
+  categories: string[] = ['Paintings', 'Wall Decor', 'Home and Living', 'Holidays', 'Special Occasions'];
   selectedCategory: string = ''; 
   selectedPriceRange: string = ''; 
   searchQuery: string = '';
