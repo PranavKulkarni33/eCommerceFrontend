@@ -261,31 +261,73 @@ export class CustomerPageComponent implements OnInit {
       productID: product.id,
       productName: product.name,
       price: product.price,
-      quantity: 1
+      quantity: 1,
     };
-
+  
     if (this.isLoggedIn) {
-      this.cartService.addOrUpdateCartItem(cartItem).subscribe(
-        () => {
-          this.loadCart();
+      this.cartService.getCartByEmail(this.user.email).subscribe(
+        (cartItems: CartItem[]) => {
+          const existingItem = cartItems.find(item => item.productID === cartItem.productID);
+          if (existingItem) {
+            alert('Item is already in the cart.');
+          } else {
+            this.cartService.addOrUpdateCartItem(cartItem).subscribe(
+              () => {
+                this.loadCart();
+                this.closeModal();
+                alert('Item added to cart.');
+              },
+              (err) => {
+                console.error('Error adding to cart', err);
+              }
+            );
+          }
         },
         (err) => {
-          console.error('Error adding to cart', err);
+          console.error('Error fetching cart items', err);
         }
       );
     } else {
       let guestCart = JSON.parse(localStorage.getItem('guestCart') || '[]');
-      const existingItem = guestCart.find((item: CartItem) => item.productID === product.id);
+      const existingItem = guestCart.find(
+        (item: CartItem) => item.productID === product.id
+      );
       if (existingItem) {
-        existingItem.quantity += 1;
+        alert('Item is already in the cart.');
       } else {
         guestCart.push(cartItem);
+        localStorage.setItem('guestCart', JSON.stringify(guestCart));
+        this.cartItems = guestCart;
+        this.updateCartTotal();
+        this.closeModal(); // Close modal after adding to cart
+        alert('Item added to cart.');
       }
-      localStorage.setItem('guestCart', JSON.stringify(guestCart));
-      this.cartItems = guestCart;
-      this.updateCartTotal();
     }
   }
+  
+  
+  // Close modal and remove backdrop
+  private closeModal(): void {
+    const modalElement = document.getElementById('productDetailsModal');
+    if (modalElement) {
+      const modalInstance = bootstrap.Modal.getInstance(modalElement);
+      if (modalInstance) {
+        modalInstance.hide();
+      }
+    }
+  
+    // Ensure backdrop is removed
+    const backdrop = document.querySelector('.modal-backdrop');
+    if (backdrop) {
+      backdrop.remove();
+    }
+  
+    // Remove `modal-open` class from body
+    document.body.classList.remove('modal-open');
+    document.body.style.removeProperty('overflow');
+    document.body.style.removeProperty('padding-right');
+  }
+  
 
   // Load cart for logged-in user or guest
   loadCart() {
@@ -302,6 +344,7 @@ export class CustomerPageComponent implements OnInit {
     } else {
       let guestCart = JSON.parse(localStorage.getItem('guestCart') || '[]');
       this.cartItems = guestCart;
+      
       this.updateCartTotal();
     }
   }
@@ -345,6 +388,8 @@ export class CustomerPageComponent implements OnInit {
       this.cartModal.show();
     }
   }
+
+  
 
   // Proceed to checkout
   goToCheckout() {
