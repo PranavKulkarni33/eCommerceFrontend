@@ -4,7 +4,6 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f4f4f9;
 }
 
 /* Verification Form Wrapper */
@@ -23,7 +22,7 @@ form {
 .verification-card {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    background-color: #fff;
+    background-color: #523b3541;
     padding: 20px;
 }
 
@@ -41,7 +40,7 @@ form {
 
 .form-title {
     color: #333;
-    font-size: 20px;
+    font-size: 1.7rem;
     margin-bottom: 15px;
 }
 
@@ -51,13 +50,6 @@ form {
     color: #555;
 }
 
-.form-input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-sizing: border-box;
-}
 
 /* Buttons */
 .button-primary {

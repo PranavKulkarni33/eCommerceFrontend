@@ -1,91 +1,3 @@
-/* General styles */
-  
-  .navbar {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 0.5rem 1rem;
-    background-color: #403a34f6;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
-  .navbar img{
-    width: 2.7rem;
-    height: auto;
-  }
-  
-  .navbar-brand {
-    font-size: 1.75rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #f1f1f1 !important;
-    display: flex;
-    align-content: center;
-  }
-
-  .navbar-nav{
-    display: flex;
-    align-items: center;
-  }
-  
-  .navbar-nav .nav-item .dropdown-toggle {
-    color: #f1f1f1 !important;
-    font-weight: bold;
-  }
-
-  .fa-shopping-cart{
-    font-size: 2rem;
-    color: #f1f1f1;
-    transition: 0.5s;
-  }
-
-  .fa-shopping-cart:hover{
-    transform: scale(1.2);
-  }
-
-  .position-relative {
-    position: relative;
-  }
-  
-  .cart-text {
-    font-size: 1rem;
-    position: absolute;
-    top: -5%; 
-    left: 75%; 
-    width: 1.5rem; 
-    height: 1.5rem;
-    line-height: 1.5rem;
-    text-align: center; 
-    background: #b93030e9; 
-    border-radius: 50%; 
-    color: #f1f1f1;
-    font-weight: bold;
-  }
-
-  .hov-green{
-    transition: 0.5s;
-  }
-  .hov-green:hover{
-    background-color: #213c22;
-    color: #f1f1f1;
-    border: solid 0.1rem #213c22;
-  }
-  
-  .dropdown-menu {
-    background-color: #f8f9fa;
-  }
-  
-  .dropdown-menu .dropdown-item {
-    font-size: 1rem;
-    transition: 0.5s;
-  }
-
-  .dropdown-menu .dropdown-item:hover {
-    background-color: #bfc0c0 ;
-  }
-  
-  .dropdown-divider {
-    border-top: 1px solid #e0e0e0;
-  }
 
   /* ======= Filter Row ========== */
 
@@ -103,19 +15,16 @@
     color: #343a40;
     font-weight: bold;
   }
+
+    /* =======  MODAL ========== */
   
   .modal-header {
-    background-color: #343a40;
-    color: #ffffff;
+    background-color: #403a34;
+    color: #f1f1f1;
   }
   
   .modal-title {
     font-size: 1.5rem;
-  }
-  
-  .modal-footer .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
   }
   
   .modal-footer .btn-secondary {
@@ -151,7 +60,7 @@
 
 .card p {
   font-size: 14px;
-  color: #6c757d;
+  color: #676f75;
 }
 
 .prod-description{
@@ -168,6 +77,12 @@
   padding: 5px;
   font-size: 16px;
   border-radius: 5px;
+}
+
+.carousel-arrow{
+  color: #343a40;
+  font-size: 2rem;
+  text-shadow: #bfc0c0;
 }
 
 /* Modal Image Styling */
