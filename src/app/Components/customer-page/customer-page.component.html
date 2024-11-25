@@ -93,11 +93,6 @@
 
 
 
-
-
-  
-
-
 <!-- Product Showcase Section -->
 <div class="container">
   <h1 class="text-center mb-4 headline">We believe that creation has no limit</h1>
@@ -112,8 +107,6 @@
             <h5 class="card-title text-center">{{ product.name }}</h5>
             <p class="card-text prod-description">{{ product.description }}</p>
             <p class="card-text"><strong>Price:</strong> ${{ product.price }}</p>
-            <!-- <p class="card-text"><strong>Category:</strong> {{ product.category }}</p> -->
-            <!-- <p class="card-text"><strong>Estimated Delivery:</strong> {{ product.delivery_time }}</p> -->
           </div>
           <div class="card-footer text-center">
             <button class="btn brown-btn" (click)="openProductDetailsModal(product)">More Details</button>
@@ -159,12 +152,12 @@
                     <img [src]="image" class="img-fluid product-modal-image" alt="{{ selectedProduct.name }}">
                   </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#productImageCarousel" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <button class="carousel-control-prev carousel-arrow" type="button" data-bs-target="#productImageCarousel" data-bs-slide="prev">
+                  <i class="fa-solid fa-angle-down" style="transform: rotate(90deg);"></i>
                   <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#productImageCarousel" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <button class="carousel-control-next carousel-arrow" type="button" data-bs-target="#productImageCarousel" data-bs-slide="next">
+                  <i class="fa-solid fa-angle-down" style="transform: rotate(270deg);"></i>
                   <span class="visually-hidden">Next</span>
                 </button>
               </div>
@@ -178,8 +171,8 @@
             <p><strong>Price:</strong> ${{ selectedProduct?.price }}</p>
             <p><strong>Dimensions:</strong> {{ selectedProduct?.dimensions }}</p>
             <p><strong>Estimated Delivery:</strong> {{ selectedProduct?.delivery_time }}</p>
-            <p><strong>Dimentions:</strong> {{ selectedProduct?.dimensions }}</p>
-            <button class="btn btn-primary mt-3 w-100" (click)="addToCart(selectedProduct)">Add to Cart</button>
+            <p><strong>Catergory:</strong> {{ selectedProduct?.category }}</p>
+            <button class="btn brown-btn mt-3 w-100" (click)="addToCart(selectedProduct)">Add to Cart</button>
           </div>
         </div>
       </div>
@@ -200,9 +193,10 @@
           <div *ngIf="cartItems.length > 0; else emptyCart">
             <div *ngFor="let item of cartItems" class="mb-3">
               <p><strong>{{ item.productName }}</strong> ({{ item.quantity }} x ${{ item.price }})</p>
-              <button class="btn btn-sm btn-outline-secondary" (click)="updateQuantity(item, -1)">-</button>
-              <button class="btn btn-sm btn-outline-secondary" (click)="updateQuantity(item, 1)">+</button>
-              <button class="btn btn-sm btn-outline-danger" (click)="removeFromCart(item.productID)">Remove</button>
+              <button class="btn btn-sm btn-outline-secondary" (click)="updateQuantity(item, -1)"><b>-</b></button>
+              <span class="ms-1 me-1">{{ item.quantity }}</span>
+              <button class="btn btn-sm btn-outline-secondary" (click)="updateQuantity(item, 1)"><b>+</b></button>
+              <button class="btn btn-sm btn-outline-danger ms-1" (click)="removeFromCart(item.productID)">Remove</button>
             </div>
             <p><strong>Total:</strong> ${{ cartTotal }}</p>
             <!-- The problem is here  -->

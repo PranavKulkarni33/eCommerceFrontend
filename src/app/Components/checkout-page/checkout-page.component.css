@@ -91,3 +91,24 @@ body {
   font-size: 16px;
   border-radius: 5px;
 }
+
+.order{
+  background-color: #523b352a;
+  border: #523b35 solid 1px;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  padding: 0.7rem;
+  color: #523b35;
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.order-head{
+  font-weight: 800;
+  background-color: #523b35d6 !important;
+  color: #f1f1f1 !important;
+}
