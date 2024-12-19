@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/Services/auth.service';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  user: User = { showPassword: false } as User;  
+  user: User = { showPassword: false, shippingAddress: '' } as User;  
   confirmPassword: string = '';  
   errorMessage: string = '';  
 
