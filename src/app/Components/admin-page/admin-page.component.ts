@@ -45,6 +45,9 @@ export class AdminPageComponent implements OnInit {
   selectedImagesForEdit: File[] = [];
   sales: any[] = []; // Add sales array to store sales history
   salesHistoryModal: any;
+  showSalesTable: boolean = false; 
+  filteredSales: any[] = []; // Stores filtered sales based on search
+  emailFilter: string = '';
 
   
 
@@ -108,13 +111,34 @@ export class AdminPageComponent implements OnInit {
   getSalesHistory(): void {
     this.checkoutService.getSalesHistory().subscribe(
       (sales) => {
-        this.sales = sales;  // Assign the fetched sales to the sales array
-        this.openSalesHistoryModal();  // Open the modal after sales are fetched
+        // Format the timestamp to display only the date
+        this.sales = sales.map((sale) => ({
+          ...sale,
+          timestamp: new Date(sale.timestamp).toISOString().split('T')[0]
+        }));
+        this.filteredSales = this.sales; // Initialize filtered sales
+        this.showSalesTable = true; // Show the sales table
       },
       (error) => {
         console.error('Error fetching sales history:', error);
       }
     );
+  }
+
+  // Method to filter sales based on email
+  filterSalesByEmail(): void {
+    if (this.emailFilter.trim() === '') {
+      this.filteredSales = this.sales; // Show all sales if the filter is empty
+    } else {
+      this.filteredSales = this.sales.filter((sale) =>
+        sale.userEmail.includes(this.emailFilter)
+      );
+    }
+  }
+  
+  // Close sales table
+  closeSalesTable(): void {
+    this.showSalesTable = false;
   }
 
   // Method to open the sales history modal
