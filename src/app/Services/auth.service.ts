@@ -14,13 +14,14 @@ export class AuthService {
     })
    }
 
-  signUp(user : User ): Promise<any>{
+   signUp(user : User ): Promise<any>{
     return Auth.signUp({
       username :user.email,
       password : user.password,
       attributes : {
         name: user.name,
-        'custom:role' : 'Customer'
+        'custom:role' : 'Customer',
+        'custom:shippingAddress': user.shippingAddress
       }
     })
    }

@@ -5,4 +5,5 @@ export interface User {
     code: string;
     name: string;
     role: string;
+    shippingAddress?: string; 
 }
