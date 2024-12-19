@@ -305,43 +305,44 @@
 </div>
 </div>
 
-<!-- Sales History Modal -->
-<div class="modal fade" id="salesHistoryModal" tabindex="-1" aria-labelledby="salesHistoryModalLabel" aria-hidden="true">
-<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="salesHistoryModalLabel">Sales History</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
-    <div class="modal-body">
-      <div *ngIf="sales.length > 0">
-        
-        <!-- Sale Information -->
-        <div *ngFor="let sale of sales">
-          <p><strong>Sale ID:</strong> {{ sale.salesId }}</p>
-          <p><strong>Email:</strong> {{ sale.userEmail }}</p>
-          <p><strong>Total Amount:</strong> ${{ sale.totalAmount }}</p>
-          <p><strong>Currency:</strong> {{ sale.currency }}</p>
-          <p><strong>Payment Status:</strong> {{ sale.paymentStatus }}</p>
-          <p><strong>Shipping Address:</strong> {{ sale.shippingAddress }}</p>
-          <p><strong>Shipping Method:</strong> {{ sale.shippingMethod }}</p>
-          <p><strong>Timestamp:</strong> {{ sale.timestamp }}</p>
-          
-          <!-- Products List -->
-          <h6>Products Sold:</h6>
+
+
+<!-- Sales History Table -->
+<div *ngIf="filteredSales.length > 0" class="mt-4">
+  <h3>Sales History</h3>
+  
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Total Amount</th>
+        <th>Currency</th>
+        <th>Products</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let sale of filteredSales">
+        <td>{{ sale.userEmail }}</td>
+        <td>{{ sale.totalAmount }}</td>
+        <td>{{ sale.currency }}</td>
+        <td>
           <ul>
             <li *ngFor="let product of sale.products">
-              {{ product.productName }} (x{{ product.quantity }}) - ${{ product.price }}
+              {{ product.productName }} (x{{ product.quantity }})
             </li>
           </ul>
-          
-          <hr> <!-- Divider between sales -->
-        </div>
-        
-      </div>
-      <p *ngIf="sales.length === 0">No sales history found.</p>
-    </div>
-  </div>
+        </td>
+        <td>{{ sale.timestamp }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
+
+<!-- Empty Sales State -->
+<div *ngIf="showSalesTable && sales.length === 0" class="mt-4">
+  <h5>No sales history found.</h5>
 </div>
+
+
   </div>
